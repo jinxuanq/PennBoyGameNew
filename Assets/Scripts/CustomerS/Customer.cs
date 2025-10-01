@@ -10,6 +10,8 @@ public class Customer : MonoBehaviour
     private Table table;
     private bool reachedTable = false;
     private Rigidbody2D rb;
+    [SerializeField] private Order currOrder;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -42,5 +44,10 @@ public class Customer : MonoBehaviour
             Debug.Log("Customer reached table: " + table.name);
         }
     }
+
+
+    //Orders
+    public void AssignOrder(Order o) { currOrder = o; }
+    public Order GetOrder() {return currOrder;}
 
 }

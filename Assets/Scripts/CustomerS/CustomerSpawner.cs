@@ -13,12 +13,18 @@ public class CustomerSpawner : MonoBehaviour
     public float gameDurationForMaxSpeed = 120f; // time in seconds until max speed reached
     private float elapsedTime = 0f;  // track how long the game has been running
 
+    //Drink Order
+    private List<DrinkRecipe> allDrinks;
+    public List<Order> orders;
 
     void Start()
     {
+        Debug.Log(SummonManager.instance.allDrinks.Count);
+        allDrinks = SummonManager.instance.allDrinks;
+
         tables = FindObjectsOfType<Table>();
         StartCoroutine(SpawnRoutine());
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -61,6 +67,13 @@ public class CustomerSpawner : MonoBehaviour
         GameObject customerObj = Instantiate(customerPrefab, transform.position, Quaternion.identity);
         Customer customer = customerObj.GetComponent<Customer>();
         customer.AssignTable(chosenTable);
+
+        //Assign Order to Customer
+        Order o = new Order(allDrinks[Random.Range(0, allDrinks.Count)]);
+        orders.Add(o);
+        customer.AssignOrder(o);
+        Debug.Log(customer.GetOrder());
+        Debug.Log(o);
     }
 
 }
