@@ -17,6 +17,10 @@ public class CustomerSpawner : MonoBehaviour
     private List<DrinkRecipe> allDrinks;
     public List<Order> orders;
 
+    // Names
+    private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
+    private List<string> namesInUse = new List<string>();
+
     void Start()
     {
         Debug.Log(SummonManager.instance.allDrinks.Count);
@@ -63,9 +67,19 @@ public class CustomerSpawner : MonoBehaviour
         // Pick a random free table
         Table chosenTable = freeTables[Random.Range(0, freeTables.Count)];
 
+        if (namesInUse.Count >= possibleNames.Count)
+        {
+            Debug.LogWarning("No unique names left ¡ª cannot spawn new customer.");
+            return;
+        }
+        string customerName = GetRandomAvailableName();
+        namesInUse.Add(customerName);
+
         // Spawn the customer
         GameObject customerObj = Instantiate(customerPrefab, transform.position, Quaternion.identity);
         Customer customer = customerObj.GetComponent<Customer>();
+        customer.customerName = customerName;
+        customerObj.name = customerName;       // set GameObject name in hierarchy
         customer.AssignTable(chosenTable);
 
         //Assign Order to Customer
@@ -73,7 +87,25 @@ public class CustomerSpawner : MonoBehaviour
         orders.Add(o);
         customer.AssignOrder(o);
         Debug.Log(customer.GetOrder());
-        Debug.Log(o);
-    }
+        //Debug.Log(o);
 
+        // Listen for when customer leaves to free name
+        customer.OnCustomerLeave += () =>
+        {
+            namesInUse.Remove(customerName);
+            orders.Remove(o); // optional: remove order from spawner's list
+        };
+
+    }
+    private string GetRandomAvailableName()
+    {
+        List<string> availableNames = new List<string>();
+        foreach (string n in possibleNames)
+        {
+            if (!namesInUse.Contains(n))
+                availableNames.Add(n);
+        }
+        int index = Random.Range(0, availableNames.Count);
+        return availableNames[index];
+    }
 }

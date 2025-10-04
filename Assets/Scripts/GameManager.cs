@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,14 +10,73 @@ public class GameManager : MonoBehaviour
     public GameState currentState;
 
     //Money
-    public int money;
+    public static event Action<int> OnMoneyChanged;
+    [SerializeField] int money;
     [SerializeField] int moneyWin;
+
+    public int Money
+    {
+        get => money;
+        set
+        {
+            money = value;
+            OnMoneyChanged?.Invoke(money); // notify listeners (like UI)
+        }
+    }
+
+    // === ORDER UI ===
+    [Header("Order UI")]
+    [SerializeField] private TextMeshProUGUI orderTextTemplate; // assign the disabled template
+    [SerializeField] private Transform orderListContainer;      // assign the OrderListContainer transform
+    private Dictionary<Customer, TextMeshProUGUI> activeOrders = new Dictionary<Customer, TextMeshProUGUI>();
 
     private void Awake()
     {
         if (instance) Destroy(this.gameObject);
         else instance = this;
     }
+
+    // --- Order UI management ---
+    /// <summary>Call when a customer receives/places an order.</summary>
+    public void AddOrderToUI(Customer customer)
+    {
+        if (customer == null) return;
+        if (customer.GetOrder() == null) return;
+        if (activeOrders.ContainsKey(customer)) return; // already shown
+
+        // Instantiate a copy, enable it and set text
+        TextMeshProUGUI text = Instantiate(orderTextTemplate, orderListContainer);
+        text.gameObject.SetActive(true);
+
+        // Use a clear display name: GameObject name (avoid ambiguous field names)
+        string displayName = customer.gameObject.name;
+        text.text = $"{displayName}: {customer.GetOrder().ToString()}";
+
+        activeOrders[customer] = text;
+    }
+
+    /// <summary>Call if order text needs to be refreshed (e.g., changed name/status).</summary>
+    public void UpdateOrderUI(Customer customer)
+    {
+        if (customer == null) return;
+        if (!activeOrders.ContainsKey(customer)) return;
+
+        var text = activeOrders[customer];
+        text.text = $"{customer.gameObject.name}: {customer.GetOrder().ToString()}";
+    }
+
+    /// <summary>Call when the customer's order is completed / removed.</summary>
+    public void RemoveOrderFromUI(Customer customer)
+    {
+        if (customer == null) return;
+        if (activeOrders.TryGetValue(customer, out var text))
+        {
+            Destroy(text.gameObject);
+            activeOrders.Remove(customer);
+        }
+    }
+
+
 
     public enum GameState
     {
@@ -93,6 +154,16 @@ public class GameManager : MonoBehaviour
     private void Pause()
     {
 
+    }
+
+    public void AddMoney(int amount)
+    {
+        Money += amount;
+    }
+
+    public void SpendMoney(int amount)
+    {
+        Money -= amount;
     }
 }
 

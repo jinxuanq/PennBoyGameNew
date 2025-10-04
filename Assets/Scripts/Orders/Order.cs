@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Order : MonoBehaviour
+[System.Serializable]
+public class Order
 {
     public DrinkRecipe drink;
     public string name;

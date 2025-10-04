@@ -25,11 +25,11 @@ public class PlayerInteract : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lastInteractInput, raycastDistance);
         if (raycastHit)
         {
-            //Debug.Log(raycastHit.transform);
+            Debug.Log(raycastHit.transform);
         }
         else
         {
-            //Debug.Log("-");
+            Debug.Log("-");
         }
     }
 }

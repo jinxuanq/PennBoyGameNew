@@ -12,9 +12,14 @@ public class Customer : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Order currOrder;
 
+    // Name
+    public string customerName;
+    public event System.Action OnCustomerLeave; // Event to notify spawner
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        GameManager.instance.AddMoney(100);
     }
 
     // Update is called once per frame
@@ -40,14 +45,55 @@ public class Customer : MonoBehaviour
         if (table != null && other == table.seatZone)
         {
             reachedTable = true;
-            GetComponent<Collider2D>().isTrigger = true;
-            Debug.Log("Customer reached table: " + table.name);
+            //GetComponent<Collider2D>().isTrigger = true;
+            //Debug.Log("Customer reached table: " + table.name);
         }
     }
 
 
-    //Orders
-    public void AssignOrder(Order o) { currOrder = o; }
-    public Order GetOrder() {return currOrder;}
+    // --------------------
+    // Orders and UI
+    // --------------------
+    public void AssignOrder(Order o)
+    {
+        currOrder = o;
+
+        // Add to UI
+        if (GameManager.instance != null)
+            GameManager.instance.AddOrderToUI(this);
+    }
+
+    public Order GetOrder()
+    {
+        return currOrder;
+    }
+
+    // --------------------
+    // Call when the customer¡¯s order is served
+    // --------------------
+    public void CompleteOrder()
+    {
+        if (GameManager.instance != null)
+        {
+            // Give reward
+            GameManager.instance.AddMoney(10);
+
+            // Remove order from UI
+            GameManager.instance.RemoveOrderFromUI(this);
+        }
+
+        // Clear local order data
+        currOrder = null;
+
+        // Mark table as free
+        if (table != null)
+            table.isOccupied = false;
+
+        // Notify spawner so the name can be reused
+        OnCustomerLeave?.Invoke();
+
+        // Destroy the customer GameObject
+        Destroy(gameObject);
+    }
 
 }
