@@ -12,6 +12,8 @@ public class Customer : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Order currOrder;
 
+    public event System.Action<Customer> OnReachedTable;
+
     // Name
     public string customerName;
     public event System.Action OnCustomerLeave; // Event to notify spawner
@@ -45,6 +47,7 @@ public class Customer : MonoBehaviour
         if (table != null && other == table.seatZone)
         {
             reachedTable = true;
+            OnReachedTable?.Invoke(this);
             //GetComponent<Collider2D>().isTrigger = true;
             //Debug.Log("Customer reached table: " + table.name);
         }
@@ -68,8 +71,13 @@ public class Customer : MonoBehaviour
         return currOrder;
     }
 
+    public bool GetReachedTable()
+    {
+        return reachedTable;
+    }
+
     // --------------------
-    // Call when the customer¡¯s order is served
+    // Call when the customerï¿½ï¿½s order is served
     // --------------------
     public void CompleteOrder()
     {
