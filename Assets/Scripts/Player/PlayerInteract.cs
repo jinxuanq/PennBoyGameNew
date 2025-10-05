@@ -6,6 +6,7 @@ public class PlayerInteract : MonoBehaviour
 {
 
     private Vector3 lastInteractInput;
+    [SerializeField] private GlasswareCounter selectedGlassware;
 
     // Update is called once per frame
     void Update()
@@ -21,15 +22,28 @@ public class PlayerInteract : MonoBehaviour
         {
             lastInteractInput = moveInput;
         }
-        float raycastDistance = 1f;
+        float raycastDistance = 0.8f;
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lastInteractInput, raycastDistance);
         if (raycastHit)
         {
-            Debug.Log(raycastHit.transform);
+            //Glassware Interact
+            if (raycastHit.transform.TryGetComponent(out GlasswareCounter glasswareCounter))
+            {
+                selectedGlassware.GlasswareHighlight(true);
+                if (glasswareCounter == selectedGlassware && Input.GetButtonDown("Interact"))
+                {
+                    glasswareCounter.Interact();
+                }
+            }
+            else
+            {
+                selectedGlassware.GlasswareHighlight(false);
+            }
         }
         else
         {
-            Debug.Log("-");
+            selectedGlassware.GlasswareHighlight(false);
         }
     }
+
 }

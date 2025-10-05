@@ -122,67 +122,28 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &236402300
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 868687396715838540, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4593743848307849251, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_Name
-      value: GlasswareCounter (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -7.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10.087544
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6309242281415962728, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
+--- !u!114 &175318872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1903316066350621946, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
+  m_PrefabInstance: {fileID: 1535705771}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfcfab8b7ff08544a783089d326ba93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &200339138 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8748484243961863276, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
+  m_PrefabInstance: {fileID: 1535705771}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15492e39e8b0fe4597c154c883c19cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &287312303
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea52fbb73f81ea4c8421010561f6978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedGlassware: {fileID: 175318872}
 --- !u!1 &1205762006
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,10 +874,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 66014267628991458, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
+      propertyPath: m_Color.a
+      value: 0.16470589
+      objectReference: {fileID: 0}
     - target: {fileID: 868687396715838540, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1903316066350621946, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
+      propertyPath: selectedGlasswareCounter_Visual
+      value: 
+      objectReference: {fileID: 200339138}
     - target: {fileID: 4593743848307849251, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
       propertyPath: m_Name
       value: GlasswareCounter
@@ -1564,7 +1534,6 @@ SceneRoots:
   - {fileID: 1870055336}
   - {fileID: 720775364}
   - {fileID: 1535705771}
-  - {fileID: 236402300}
   - {fileID: 1270976661}
   - {fileID: 287312307}
   - {fileID: 1941332334}
