@@ -42,7 +42,7 @@ public class CustomerSpawner : MonoBehaviour
             SpawnCustomer();
 
             // Calculate dynamic interval
-            float t = Mathf.Clamp01(elapsedTime / gameDurationForMaxSpeed); // 0 ¡ú 1
+            float t = Mathf.Clamp01(elapsedTime / gameDurationForMaxSpeed); // 0 ï¿½ï¿½ 1
             float currentInterval = Mathf.Lerp(initialSpawnInterval, minSpawnInterval, t);
 
             yield return new WaitForSeconds(currentInterval);
@@ -60,7 +60,7 @@ public class CustomerSpawner : MonoBehaviour
 
         if (freeTables.Count == 0)
         {
-            Debug.Log("All tables are full ¡ª no customer spawned.");
+            Debug.Log("All tables are full ï¿½ï¿½ no customer spawned.");
             return;
         }
 
@@ -69,7 +69,7 @@ public class CustomerSpawner : MonoBehaviour
 
         if (namesInUse.Count >= possibleNames.Count)
         {
-            Debug.LogWarning("No unique names left ¡ª cannot spawn new customer.");
+            Debug.LogWarning("No unique names left ï¿½ï¿½ cannot spawn new customer.");
             return;
         }
         string customerName = GetRandomAvailableName();
@@ -82,18 +82,22 @@ public class CustomerSpawner : MonoBehaviour
         customerObj.name = customerName;       // set GameObject name in hierarchy
         customer.AssignTable(chosenTable);
 
-        //Assign Order to Customer
-        Order o = new Order(allDrinks[Random.Range(0, allDrinks.Count)]);
-        orders.Add(o);
-        customer.AssignOrder(o);
-        Debug.Log(customer.GetOrder());
+        //Assign Order to Customer after table reached
+        customer.OnReachedTable += (c) =>
+        {
+            Order o = new Order(allDrinks[Random.Range(0, allDrinks.Count)]);
+            orders.Add(o);
+            customer.AssignOrder(o);
+            Debug.Log(customer.GetOrder());
+
+            c.OnCustomerLeave += () => { orders.Remove(o); }; // optional: remove order from spawner's list}
+        };
         //Debug.Log(o);
 
         // Listen for when customer leaves to free name
         customer.OnCustomerLeave += () =>
         {
-            namesInUse.Remove(customerName);
-            orders.Remove(o); // optional: remove order from spawner's list
+            namesInUse.Remove(customerName);            
         };
 
     }
