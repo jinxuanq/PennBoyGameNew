@@ -10,9 +10,13 @@ public class Customer : MonoBehaviour
     private Table table;
     private bool reachedTable = false;
     private Rigidbody2D rb;
+    private bool interactable = false;
     [SerializeField] private Order currOrder;
+    private Dialogue dialogueBox;
+    private GameInput gameInput;
 
-    public event System.Action<Customer> OnReachedTable;
+
+    public event System.Action<Customer> OnDrinkOrdered;
 
     // Name
     public string customerName;
@@ -47,10 +51,41 @@ public class Customer : MonoBehaviour
         if (table != null && other == table.seatZone)
         {
             reachedTable = true;
-            OnReachedTable?.Invoke(this);
+            interactable = true;
             //GetComponent<Collider2D>().isTrigger = true;
             //Debug.Log("Customer reached table: " + table.name);
         }
+    }
+
+    public void SetDialogueBox(Dialogue box)
+    {
+        dialogueBox = box;
+    }
+
+    public void SetGameInput(GameInput input)
+    {
+        gameInput = input;
+    }
+    public void Interact()
+    {
+        Debug.Log("Interacted");
+        if (interactable)
+        {
+            gameInput.LockInput(true);
+            dialogueBox.AddText("I want sum of dat good shit");
+            dialogueBox.AddText("gimme juice");
+            dialogueBox.StartDialogue();
+            dialogueBox.OnDialogueEnded += (c) =>
+            {
+                OnDrinkOrdered?.Invoke(this);
+                gameInput.LockInput(false);
+            };
+        }
+    }
+
+    public bool GetInteractable()
+    {
+        return interactable;
     }
 
 

@@ -6,8 +6,8 @@ public class Player_Movement : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] public float moveSpeed = 5f; // movement speed
+    [SerializeField] private GameInput gameInput;
     private Rigidbody2D rb;
-
     private Vector2 moveInput;
 
     void Start()
@@ -17,14 +17,12 @@ public class Player_Movement : MonoBehaviour
 
     void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        moveInput = new Vector2(moveX, moveY).normalized;
-
+        moveInput = gameInput.GetMovementVectorNormalized();
     }
     void FixedUpdate()
     {
         // Move using physics
+
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
     }
 

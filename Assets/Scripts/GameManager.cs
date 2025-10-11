@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     public static event Action<int> OnMoneyChanged;
     [SerializeField] int money;
     [SerializeField] int moneyWin;
+    [SerializeField] private GameInput gameInput;
+
 
     public int Money
     {
@@ -100,6 +103,7 @@ public class GameManager : MonoBehaviour
         if (money >= moneyWin){StateChanged(GameState.Win);}
     }
 
+
     public void StateChanged(GameState state)
     {
         switch (state)
@@ -165,6 +169,7 @@ public class GameManager : MonoBehaviour
     {
         Money -= amount;
     }
+    
 }
 
 
