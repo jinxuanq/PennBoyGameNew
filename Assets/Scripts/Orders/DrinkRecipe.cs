@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class DrinkRecipe : MonoBehaviour
+[CreateAssetMenu(fileName = "NewDrinkRecipe", menuName = "BarGame/Drink Recipe")]
+public class DrinkRecipe : ScriptableObject
 {
     public string drinkName;
     public GameObject dishPrefab;
-    public List<Ingredient> requiredIngredients;
+
+    public List<Ingredient> requiredIngredients = new List<Ingredient>();
 
     public enum Ingredient
     {

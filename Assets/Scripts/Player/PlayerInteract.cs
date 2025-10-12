@@ -74,4 +74,12 @@ public class PlayerInteract : MonoBehaviour
             currentCustomer = null;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("BarArea"))
+        {
+            MixingManager.instance.OpenMixingUI();
+        }
+    }
+
 }
