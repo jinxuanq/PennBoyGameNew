@@ -11,6 +11,7 @@ public class Dialogue : MonoBehaviour
     public TextMeshProUGUI textComponent;
     public List<string> lines = new List<string>();
     public float textSpeed;
+    private bool typing;
 
     private int index;
 
@@ -30,17 +31,28 @@ public class Dialogue : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(textComponent.text);
-            //if line written, move to next line in list, else skip ahead and complete line
-            if (textComponent.text == lines[index])
+            Debug.Log(lines.Count);
+            if(lines.Count > 0)
             {
-                NextLine();
+                //if line written, move to next line in list, else skip ahead and complete line
+                if (!typing)
+                {
+                    NextLine();
+                }
+                else
+                {
+                    StopAllCoroutines();
+                    typing = false;
+                    textComponent.text = lines[index];
+                    lines.RemoveAt(0);
+                }
             }
             else
             {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
+                Debug.Log("End");
+                OnDialogueEnded?.Invoke(this);
             }
+
         }
     }
 
@@ -60,32 +72,22 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
+        typing = true;
         textComponent.text = string.Empty;
         yield return null;
-        foreach (char c in lines[index].ToCharArray())
+        foreach (char c in (lines[index].ToCharArray()))
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
         Debug.Log(textComponent.text);
+        lines.RemoveAt(0);
+        typing = false;
     }
 
     void NextLine()
     {
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
-        {
-            //moves the list forward and deletes read line, if last line then finish dialogue
-            if (lines.Count > 1)
-            {
-                lines.RemoveAt(0);
-            }
-            else
-            {
-                lines.RemoveAt(0);
-                OnDialogueEnded?.Invoke(this);
-                gameObject.SetActive(false);
-            }
-        }
     }
 }

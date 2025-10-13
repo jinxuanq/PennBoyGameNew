@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MixingManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class MixingManager : MonoBehaviour
 
     public void OpenMixingUI()
     {
+        GameInput.instance.LockInput(true);
+
         if (isMixing) return;
         isMixing = true;
         currentMix.Clear();
@@ -31,6 +34,8 @@ public class MixingManager : MonoBehaviour
 
     public void CloseMixingUI()
     {
+        GameInput.instance.LockInput(false);
+
         isMixing = false;
         mixingUI.SetActive(false);
         currentMix.Clear();
@@ -53,7 +58,7 @@ public class MixingManager : MonoBehaviour
         if (matchedRecipe != null)
         {
             Debug.Log("Created: " + matchedRecipe.drinkName);
-            Instantiate(matchedRecipe.dishPrefab, transform.position, Quaternion.identity);
+            Instantiate(matchedRecipe.drinkPrefab, transform.position, Quaternion.identity);
         }
         else
         {

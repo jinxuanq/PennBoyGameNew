@@ -27,7 +27,7 @@ public class SummonManager : MonoBehaviour
         {
             Debug.Log(recipe.drinkName);
             if (IsMatch(recipe.requiredIngredients, items))
-                return recipe.dishPrefab;
+                return recipe.drinkPrefab;
         }
         return null;
     }

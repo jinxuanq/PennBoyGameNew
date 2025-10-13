@@ -13,8 +13,6 @@ public class CustomerSpawner : MonoBehaviour
     public float gameDurationForMaxSpeed = 120f; // time in seconds until max speed reached
     private float elapsedTime = 0f;  // track how long the game has been running
     [SerializeField] private Dialogue dialogueBox;
-    [SerializeField] private GameInput gameInput;
-
 
     //Drink Order
     private List<DrinkRecipe> allDrinks;
@@ -84,7 +82,6 @@ public class CustomerSpawner : MonoBehaviour
         customer.customerName = customerName;
         customerObj.name = customerName;       // set GameObject name in hierarchy
         customer.SetDialogueBox(dialogueBox);
-        customer.SetGameInput(gameInput);
         customer.AssignTable(chosenTable);
 
         //Assign Order to Customer after table reached

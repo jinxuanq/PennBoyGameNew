@@ -6,7 +6,7 @@ using UnityEngine;
 public class DrinkRecipe : ScriptableObject
 {
     public string drinkName;
-    public GameObject dishPrefab;
+    public GameObject drinkPrefab;
 
     public List<Ingredient> requiredIngredients = new List<Ingredient>();
 

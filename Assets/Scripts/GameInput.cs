@@ -7,10 +7,15 @@ using UnityEngine.InputSystem;
 public class GameInput : MonoBehaviour
 {
 
+    public static GameInput instance { get; private set; }
+
     public event EventHandler OnInteractAction;
     private PlayerInputActions playerInputActions;
     private void Awake()
     {
+        if (instance) Destroy(this.gameObject);
+        else instance = this;
+
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
 

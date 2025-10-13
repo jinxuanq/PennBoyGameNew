@@ -13,8 +13,6 @@ public class Customer : MonoBehaviour
     private bool interactable = false;
     [SerializeField] private Order currOrder;
     private Dialogue dialogueBox;
-    private GameInput gameInput;
-
 
     public event System.Action<Customer> OnDrinkOrdered;
 
@@ -62,23 +60,20 @@ public class Customer : MonoBehaviour
         dialogueBox = box;
     }
 
-    public void SetGameInput(GameInput input)
-    {
-        gameInput = input;
-    }
     public void Interact()
     {
         Debug.Log("Interacted");
         if (interactable)
         {
-            gameInput.LockInput(true);
+            GameInput.instance.LockInput(true);
             dialogueBox.AddText("I want sum of dat good shit");
             dialogueBox.AddText("gimme juice");
             dialogueBox.StartDialogue();
             dialogueBox.OnDialogueEnded += (c) =>
             {
+                GameInput.instance.LockInput(false);
+                dialogueBox.gameObject.SetActive(false);
                 OnDrinkOrdered?.Invoke(this);
-                gameInput.LockInput(false);
             };
         }
     }
