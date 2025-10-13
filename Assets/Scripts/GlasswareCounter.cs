@@ -9,6 +9,7 @@ public class GlasswareCounter : MonoBehaviour
     public void Interact()
     {
         Debug.Log("Glassware Interact");
+        MixingManager.instance.OpenMixingUI();
     }
 
     public void GlasswareHighlight(bool highlighted)
