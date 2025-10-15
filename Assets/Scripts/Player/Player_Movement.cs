@@ -10,6 +10,8 @@ public class Player_Movement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
+    [SerializeField] private SpriteRenderer sprite;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -18,6 +20,14 @@ public class Player_Movement : MonoBehaviour
     void Update()
     {
         moveInput = gameInput.GetMovementVectorNormalized();
+        if(moveInput.x >0 )
+        {
+            sprite.flipX = false;
+        }
+        else if(moveInput.x <0 )
+        {
+            sprite.flipX=true;
+        }
     }
     void FixedUpdate()
     {

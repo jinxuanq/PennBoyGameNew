@@ -8,13 +8,18 @@ public class PlayerInteract : MonoBehaviour
     private Vector2 lastInteractInput;
     [SerializeField] private GameInput gameInput;
 
+    [SerializeField] private GameObject eButton;
+
     private GlasswareCounter currentGlassware;
     private Customer currentCustomer;
+
 
 
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+
+        eButton.SetActive(false);
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
@@ -42,7 +47,7 @@ public class PlayerInteract : MonoBehaviour
         {
             lastInteractInput = moveInput;
         }
-        float raycastDistance = 0.8f;
+        float raycastDistance = 1f;
         RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lastInteractInput, raycastDistance);
         if (raycastHit)
         {
@@ -50,12 +55,14 @@ public class PlayerInteract : MonoBehaviour
             if (raycastHit.transform.TryGetComponent(out Customer customer))
             {
                 currentCustomer = customer;
+                eButton.SetActive(true);
             }
             //Glassware Interact
             if (raycastHit.transform.TryGetComponent(out GlasswareCounter glasswareCounter))
             {
                 currentGlassware = glasswareCounter;
                 currentGlassware.GlasswareHighlight(true);
+                eButton.SetActive(true);
             }
         }
         else
@@ -72,6 +79,8 @@ public class PlayerInteract : MonoBehaviour
             currentGlassware = null;
         }
             currentCustomer = null;
+
+        eButton.SetActive(false);
     }
 
 }
