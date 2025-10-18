@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68030fcd0e49e354f970020ef4ac2b1f, type: 3}
-  m_Name: MojitoRecipe
+  m_Script: {fileID: 11500000, guid: ede59df834ebd4a4bbe7fe6bb0f9c4a2, type: 3}
+  m_Name: GlassDatabase_Default
   m_EditorClassIdentifier: 
-  drinkName: Mojito
-  drinkPrefab: {fileID: 4265846000920661065, guid: d86a688730659be4e86d0cdff44bbed0, type: 3}
-  requiredIngredients: 000000000100000003000000
+  availableGlasses: 000000000100000002000000
