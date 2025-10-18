@@ -3194,7 +3194,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0000916, y: 292.46}
+  m_AnchoredPosition: {x: 1.0001221, y: 292.45996}
   m_SizeDelta: {x: 2, y: -1070}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1288947613
@@ -3890,6 +3890,10 @@ PrefabInstance:
     - target: {fileID: 868687396715838540, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903316066350621946, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
+      propertyPath: counterType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1903316066350621946, guid: e36f21adcb6ed974c92c3d0cc9fe1a92, type: 3}
       propertyPath: selectedGlasswareCounter_Visual
