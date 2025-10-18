@@ -24,8 +24,7 @@ public class CustomerSpawner : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(SummonManager.instance.allDrinks.Count);
-        allDrinks = SummonManager.instance.allDrinks;
+        allDrinks = MixingManager.instance.recipeDatabase.allRecipes;
 
         tables = FindObjectsOfType<Table>();
         StartCoroutine(SpawnRoutine());

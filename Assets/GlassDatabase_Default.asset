@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede59df834ebd4a4bbe7fe6bb0f9c4a2, type: 3}
   m_Name: GlassDatabase_Default
   m_EditorClassIdentifier: 
-  availableGlasses: 000000000100000002000000
+  availableGlasses: 0000000001000000020000000300000004000000

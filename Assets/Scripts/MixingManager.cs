@@ -10,10 +10,10 @@ public class MixingManager : MonoBehaviour
     [Header("References")]
     public RecipeDataBase recipeDatabase;
     public GameObject randomDrinkPrefab;
-    public GameObject mixingUI;  // assign your mixing canvas here
 
     [Header("UI References")]
     public GlassChoosingUI glassChoosingUI;  // drag the Canvas object here
+    public GameObject pourmixingUI;  // assign your mixing canvas here
 
     [Header("Data")]
     public List<GlassType> availableGlasses;  // assign in Inspector or populate dynamically
@@ -36,7 +36,7 @@ public class MixingManager : MonoBehaviour
         if (isMixing) return;
         isMixing = true;
         currentMix.Clear();
-        mixingUI.SetActive(true);
+        pourmixingUI.SetActive(true);
         Debug.Log("Mixing UI opened");
     }
 
@@ -45,7 +45,7 @@ public class MixingManager : MonoBehaviour
         GameInput.instance.LockInput(false);
 
         isMixing = false;
-        mixingUI.SetActive(false);
+        pourmixingUI.SetActive(false);
         currentMix.Clear();
         Debug.Log("Mixing UI closed");
     }

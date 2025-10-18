@@ -12,9 +12,10 @@ public class DrinkRecipe : ScriptableObject
 
     public enum Ingredient
     {
+        Tequila,
         Vodka,
-        Mint,
-        Syrup,
-        Ice
+        Gin,
+        Rum,
+        Whiskey
     }
 }
