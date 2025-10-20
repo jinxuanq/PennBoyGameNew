@@ -17,10 +17,14 @@ public class RecipeDataBase : ScriptableObject
             bool match = true;
             for (int i = 0; i < attempt.Count; i++)
             {
-                if (recipe.requiredIngredients[i] != attempt[i])
+                if (!attempt.Contains(recipe.requiredIngredients[i]))
                 {
                     match = false;
                     break;
+                }
+                if (!recipe.requiredIngredients.Contains(attempt[i]))
+                {
+                    match = false; break;
                 }
             }
 

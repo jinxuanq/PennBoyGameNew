@@ -10,6 +10,7 @@ public class DraggableIngredients : MonoBehaviour, IBeginDragHandler, IDragHandl
     private Vector3 startPos;
 
     public DrinkRecipe.Ingredient ingredientType; // assign in Inspector
+    public GameObject ingPrefab;
 
     private CanvasGroup canvasGroup;
 
@@ -46,7 +47,7 @@ public class DraggableIngredients : MonoBehaviour, IBeginDragHandler, IDragHandl
     public void OnEndDrag(PointerEventData eventData)
     {
         // Reset position if not dropped in a MixZone
-        if (!MixZone.IsPointerOverDropZone(eventData))
+        if (!MixZone.IsPointerOverDropZone(eventData)||!IngredientZone.IsPointerOverDropZone(eventData))
         {
             ResetPosition();
         }

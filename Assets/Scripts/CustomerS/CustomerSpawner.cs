@@ -60,7 +60,7 @@ public class CustomerSpawner : MonoBehaviour
 
         if (freeTables.Count == 0)
         {
-            Debug.Log("All tables are full �� no customer spawned.");
+            //Debug.Log("All tables are full �� no customer spawned.");
             return;
         }
 

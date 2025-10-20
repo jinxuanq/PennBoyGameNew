@@ -53,19 +53,19 @@ public class GlasswareCounter : MonoBehaviour
     private void HandlePour()
     {
         Debug.Log("Pour Counter Interact");
-        MixingManager.instance.OpenMixingUI();
+        //MixingManager.instance.OpenMixingUI();
     }
 
     private void HandleBlend()
     {
         Debug.Log("Blend Counter Interact");
-        MixingManager.instance.OpenMixingUI();
+        //MixingManager.instance.OpenMixingUI();
     }
 
     private void HandleIngredient()
     {
         Debug.Log("Ingredient Counter Interact");
-        MixingManager.instance.OpenMixingUI();
+        MixingManager.instance.OpenIngredientsUI();
     }
     private void HandleDrug()
     {

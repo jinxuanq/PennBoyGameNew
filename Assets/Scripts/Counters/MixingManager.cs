@@ -12,8 +12,9 @@ public class MixingManager : MonoBehaviour
     public GameObject randomDrinkPrefab;
 
     [Header("UI References")]
-    public GlassChoosingUI glassChoosingUI;  // drag the Canvas object here
+    public GameObject glassChoosingUI;  // drag the Canvas object here
     public GameObject pourmixingUI;  // assign your mixing canvas here
+    public GameObject ingredientUI;
 
     [Header("Data")]
     public List<GlassType> availableGlasses;  // assign in Inspector or populate dynamically
@@ -56,7 +57,7 @@ public class MixingManager : MonoBehaviour
 
         if (glassChoosingUI != null)
         {
-            glassChoosingUI.Open(drinks, glasses);
+            glassChoosingUI.GetComponent<GlassChoosingUI>().Open(drinks, glasses);
             Debug.Log("GlassChoosingUI opened");
         }
         else
@@ -127,4 +128,15 @@ public class MixingManager : MonoBehaviour
         Debug.Log($"GetAvailableGlasses called. Returning {availableGlasses.Count} glasses.");
         return availableGlasses;
     }
+
+    public void OpenIngredientsUI()
+    {
+        ingredientUI.SetActive(true);
+    }
+    public void CloseIngredientsUI()
+    {
+        ingredientUI.SetActive(false);
+    }
 }
+
+
