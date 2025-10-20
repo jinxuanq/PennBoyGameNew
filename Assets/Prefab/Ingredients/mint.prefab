@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3296043661073650310}
   - component: {fileID: 330529307069145781}
-  - component: {fileID: 3130035544962419660}
+  - component: {fileID: 7029136691098724489}
   m_Layer: 0
-  m_Name: lemon
+  m_Name: mint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.9142746, b: 0, a: 1}
+  m_Color: {r: 0.06568074, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3130035544962419660
+--- !u!114 &7029136691098724489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,5 +101,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e499f9df7cf41a1468cf24bffa8163db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredientType: 5
+  ingredientType: 7
   ingPrefab: {fileID: 0}

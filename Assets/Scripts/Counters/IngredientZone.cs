@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private GameObject ing;
+    private DraggableIngredients ingredient;
 
     //Oscillate
     [Header("Points")]
@@ -21,13 +22,16 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
     [Header("Optional Pause at Ends")]
     public float pauseTime = 0.2f;
     private bool oscillating = false;
+    private float grade;
 
-    public int minChop = -5;
-    public int maxChop = 5;
+
+    [SerializeField] private GameObject drinkThumbPrefab;     // prefab with DrinkThumb component
+    [SerializeField] private Transform drinkThumbParent;      // where to instantiate drink thumbnails
+    private List<GameObject> spawnedDrinkThumbs = new List<GameObject>();
 
     public void OnDrop(PointerEventData eventData)
     {
-        DraggableIngredients ingredient = eventData.pointerDrag.GetComponent<DraggableIngredients>();
+        ingredient = eventData.pointerDrag.GetComponent<DraggableIngredients>();
         if (ingredient != null)
         {
             Debug.Log(ingredient.ingPrefab != null);
@@ -83,9 +87,39 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
     {
         oscillating = false;
         float avg = Mathf.Abs(pointA.position.x - pointB.position.x) / 2;
-        float grade = Mathf.Abs((Mathf.Abs(ing.transform.position.x - pointA.position.x) - avg)) / avg*100;
-        ing.gameObject.SetActive(false);
+        float g = Mathf.Abs((Mathf.Abs(ing.transform.position.x - pointA.position.x) - avg)) / avg*100;
+
+        Debug.Log(ingredient.ingredientType);
+        grade = g;
         Debug.Log(grade);
+    }
+
+
+    public void PopulateDrinks(List<Drink> drinks)
+    {
+        for(int i = 0; i < drinkThumbParent.childCount; i++)
+        {
+            Destroy(drinkThumbParent.GetChild(i).gameObject);
+        }
+        foreach (var d in drinks)
+        {
+            if (!d.HasGlassAssigned()) continue; // skip drinks without a glass
+            var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
+            var thumb = go.GetComponent<DrinkThumb>();
+            if (thumb != null) thumb.Init(d, OnIngredientAssignedToDrink, grade);
+            spawnedDrinkThumbs.Add(go);
+        }
+    }
+    private void OnIngredientAssignedToDrink(Drink drink, DrinkRecipe.Ingredient ingrdientType)
+    {
+        Debug.Log($"Assigned {ingrdientType} to drink {drink.name}");
+        // Remove the drink thumbnail from UI
+        var thumbToRemove = spawnedDrinkThumbs.Find(t => t.GetComponent<DrinkThumb>().linkedDrink == drink);
+        if (thumbToRemove != null)
+        {
+            spawnedDrinkThumbs.Remove(thumbToRemove);
+            Destroy(thumbToRemove);
+        }
     }
 
 

@@ -13,7 +13,10 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
     [SerializeField] private TextMeshProUGUI nameText;
 
     public Drink linkedDrink;
-    private Action<Drink, GlassType> onAssignedCallback;
+    private Action<Drink, GlassType> onAssignedGlassCallback;
+    private Action<Drink, DrinkRecipe.Ingredient> onAssignedIngredientCallback;
+
+    private float grade;
 
     /// <summary>
     /// Initialize with a real Drink reference and a callback to notify when a glass is assigned.
@@ -21,12 +24,20 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
     public void Init(Drink drink, Action<Drink, GlassType> assignedCallback)
     {
         linkedDrink = drink;
-        onAssignedCallback = assignedCallback;
+        onAssignedGlassCallback = assignedCallback;
         if (nameText != null)
             nameText.text = drink.name;
 
         // Optionally set drinkImage sprite from drink data if you have one
         // if (drink.thumbSprite != null && drinkImage) drinkImage.sprite = drink.thumbSprite;
+    }
+    public void Init(Drink drink, Action<Drink, DrinkRecipe.Ingredient> assignedCallback, float g)
+    {
+        linkedDrink = drink;
+        onAssignedIngredientCallback = assignedCallback;
+        grade = g;
+        if (nameText != null)
+            nameText.text = drink.name;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -38,10 +49,19 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
             linkedDrink.AssignGlass(glass.glassType);
 
             // Callback to UI manager
-            onAssignedCallback?.Invoke(linkedDrink, glass.glassType);
+            onAssignedGlassCallback?.Invoke(linkedDrink, glass.glassType);
 
             // Visual feedback: you could set an icon on this thumb or disable the glass button
             Debug.Log($"Dropped glass {glass.glassType} onto drink {linkedDrink.name}");
+        }
+        var ingredient = eventData.pointerDrag?.GetComponent<DraggableIngredients>();
+        if (ingredient != null && linkedDrink != null)
+        {
+            // Assign glass to the real drink object
+            linkedDrink.AssignGarnish(ingredient.ingredientType, grade);
+
+            // Callback to UI manager
+            onAssignedIngredientCallback?.Invoke(linkedDrink, ingredient.ingredientType);
         }
     }
 

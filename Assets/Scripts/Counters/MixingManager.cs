@@ -119,6 +119,12 @@ public class MixingManager : MonoBehaviour
         Debug.Log($"GetAvailableDrinks called. Returning {availableDrinks.Count} drinks.");
         return availableDrinks;
     }
+    public List<Drink> GetAvailableDrinksWithGlass()
+    {
+        List<Drink> availableDrinks = createdDrinks.FindAll(d => d.HasGlassAssigned());
+        Debug.Log($"GetAvailableDrinks called. Returning {availableDrinks.Count} drinks.");
+        return availableDrinks;
+    }
 
     /// <summary>
     /// Returns a list of all available glass types
@@ -128,10 +134,11 @@ public class MixingManager : MonoBehaviour
         Debug.Log($"GetAvailableGlasses called. Returning {availableGlasses.Count} glasses.");
         return availableGlasses;
     }
-
+    
     public void OpenIngredientsUI()
     {
         ingredientUI.SetActive(true);
+        ingredientUI.GetComponentInChildren<IngredientZone>().PopulateDrinks(GetAvailableDrinksWithGlass());
     }
     public void CloseIngredientsUI()
     {

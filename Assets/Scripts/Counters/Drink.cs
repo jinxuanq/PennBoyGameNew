@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum GlassType { Coupe, Highball, Martini, Collins, Tumbler } // extend as needed
-public enum GarnishType { Mint, Ice, Lemon}
 public enum DrugType { Flower, Leaf, WhitePowder}
 
 public class Drink : MonoBehaviour
 {
     public GlassType? assignedGlass = null;
     public DrinkRecipe assignedDrink = null;
-    public GarnishType? assignedGarnish = null;
-    public int garnishGrade = 0;
-    public int blendGrade = 0;
+    public DrinkRecipe.Ingredient? assignedGarnish = null;
+    public float garnishGrade = 0;
+    public float blendGrade = 0;
     public DrugType? assignedDrug = null;
 
     // public Sprite thumbSprite; // optional thumbnail for UI
@@ -53,23 +52,21 @@ public class Drink : MonoBehaviour
     }
 
 
-    public void AssignGarnish(GarnishType g, int score)
+    public void AssignGarnish(DrinkRecipe.Ingredient g, float score)
     {
         assignedGarnish = g;
         garnishGrade = score;
-        // TODO: swap model/mesh/material to show glass visually,
-        // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned garnish: {g}, score: {score}");
         ApplyGarnishVisual(g);
     }
-    private void ApplyGarnishVisual(GarnishType g)
+    private void ApplyGarnishVisual(DrinkRecipe.Ingredient g)
     {
         // implement your visual logic:
         // - enable the correct glass model on the drink
         // - change parent/transform orientation, etc.
     }
 
-    public void AssignBlender(int score)
+    public void AssignBlender(float score)
     {
         blendGrade = score;
         // TODO: swap model/mesh/material to show glass visually,
