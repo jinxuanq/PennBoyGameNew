@@ -7,22 +7,21 @@ using UnityEngine.EventSystems;
 public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private GameObject ing;
-    private DraggableIngredients ingredient;
 
     //Oscillate
     [Header("Points")]
-    public Transform pointA;
-    public Transform pointB;
-    public Transform center;
+    public RectTransform pointA;
+    public RectTransform pointB;
+    public RectTransform center;
+    RectTransform currRect;
 
     [Header("Speed Range")]
-    public float minSpeed = 10f;
-    public float maxSpeed = 20f;
+    public float minSpeed = 100f;
+    public float maxSpeed = 120f;
 
     [Header("Optional Pause at Ends")]
     public float pauseTime = 0.2f;
     private bool oscillating = false;
-    private float grade;
 
 
     [SerializeField] private GameObject drinkThumbPrefab;     // prefab with DrinkThumb component
@@ -31,11 +30,13 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
 
     public void OnDrop(PointerEventData eventData)
     {
-        ingredient = eventData.pointerDrag.GetComponent<DraggableIngredients>();
+        DraggableIngredients ingredient = eventData.pointerDrag.GetComponent<DraggableIngredients>();
         if (ingredient != null)
         {
             Debug.Log(ingredient.ingPrefab != null);
-            ing = Instantiate(ingredient.ingPrefab, center);
+            ing = Instantiate(ingredient.ingPrefab, center.parent);
+            currRect = ing.GetComponent<RectTransform>();
+            currRect.position = center.position;
             StartCoroutine(Oscillate());
             Debug.Log("Oscillate");
 
@@ -57,10 +58,10 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             float speed = Random.Range(minSpeed, maxSpeed);
 
             // Move toward target
-            while (Vector3.Distance(ing.transform.position, target.position) > 0.001f &&oscillating)
+            while (Vector3.Distance(currRect.position, target.position) > 0.001f && oscillating)
             {
-                ing.transform.position = Vector3.MoveTowards(
-                    ing.transform.position,
+                currRect.position = Vector3.MoveTowards(
+                    currRect.position,
                     target.position,
                     speed * Time.deltaTime
                 );
@@ -70,7 +71,7 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             if (oscillating)
             {
                 // Snap exactly to target (avoid float drift)
-                ing.transform.position = target.position;
+                currRect.position = target.position;
 
                 // Optional pause at ends
                 if (pauseTime > 0f)
@@ -87,11 +88,10 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
     {
         oscillating = false;
         float avg = Mathf.Abs(pointA.position.x - pointB.position.x) / 2;
-        float g = Mathf.Abs((Mathf.Abs(ing.transform.position.x - pointA.position.x) - avg)) / avg*100;
+        float g = 100-(Mathf.Abs((Mathf.Abs(currRect.position.x - pointA.position.x) - avg)) / avg*100);
 
-        Debug.Log(ingredient.ingredientType);
-        grade = g;
-        Debug.Log(grade);
+        Debug.Log(ing.GetComponent<DraggableIngredients>().ingredientType + ", score: " + (int)g);
+        ing.GetComponent<DraggableIngredients>().score = (int) g;
     }
 
 
@@ -106,13 +106,13 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             if (!d.HasGlassAssigned()) continue; // skip drinks without a glass
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
             var thumb = go.GetComponent<DrinkThumb>();
-            if (thumb != null) thumb.Init(d, OnIngredientAssignedToDrink, grade);
+            if (thumb != null) thumb.Init(d, OnIngredientAssignedToDrink);
             spawnedDrinkThumbs.Add(go);
         }
     }
-    private void OnIngredientAssignedToDrink(Drink drink, DrinkRecipe.Ingredient ingrdientType)
+    private void OnIngredientAssignedToDrink(Drink drink, DraggableIngredients ing)
     {
-        Debug.Log($"Assigned {ingrdientType} to drink {drink.name}");
+        Debug.Log($"Assigned {ing.ingredientType} with score {ing.score} to drink {drink.name}");
         // Remove the drink thumbnail from UI
         var thumbToRemove = spawnedDrinkThumbs.Find(t => t.GetComponent<DrinkThumb>().linkedDrink == drink);
         if (thumbToRemove != null)

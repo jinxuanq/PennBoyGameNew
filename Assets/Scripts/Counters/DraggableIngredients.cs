@@ -11,6 +11,7 @@ public class DraggableIngredients : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     public DrinkRecipe.Ingredient ingredientType; // assign in Inspector
     public GameObject ingPrefab;
+    public int score;
 
     private CanvasGroup canvasGroup;
 

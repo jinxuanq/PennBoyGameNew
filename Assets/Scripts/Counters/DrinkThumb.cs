@@ -14,9 +14,7 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     public Drink linkedDrink;
     private Action<Drink, GlassType> onAssignedGlassCallback;
-    private Action<Drink, DrinkRecipe.Ingredient> onAssignedIngredientCallback;
-
-    private float grade;
+    private Action<Drink, DraggableIngredients> onAssignedIngredientCallback;
 
     /// <summary>
     /// Initialize with a real Drink reference and a callback to notify when a glass is assigned.
@@ -31,11 +29,10 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
         // Optionally set drinkImage sprite from drink data if you have one
         // if (drink.thumbSprite != null && drinkImage) drinkImage.sprite = drink.thumbSprite;
     }
-    public void Init(Drink drink, Action<Drink, DrinkRecipe.Ingredient> assignedCallback, float g)
+    public void Init(Drink drink, Action<Drink, DraggableIngredients> assignedCallback)
     {
         linkedDrink = drink;
         onAssignedIngredientCallback = assignedCallback;
-        grade = g;
         if (nameText != null)
             nameText.text = drink.name;
     }
@@ -58,10 +55,10 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
         if (ingredient != null && linkedDrink != null)
         {
             // Assign glass to the real drink object
-            linkedDrink.AssignGarnish(ingredient.ingredientType, grade);
+            linkedDrink.AssignGarnish(ingredient.ingredientType, ingredient.score);
 
             // Callback to UI manager
-            onAssignedIngredientCallback?.Invoke(linkedDrink, ingredient.ingredientType);
+            onAssignedIngredientCallback?.Invoke(linkedDrink, ingredient);
         }
     }
 
