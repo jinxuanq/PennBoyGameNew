@@ -19,6 +19,10 @@ public class DrinkRecipe : ScriptableObject
         Lemon,
         Lime,
         Orange,
-        Mint
+        Mint,
+        Flower,
+        Leaf,
+        Powder,
+        Crystal
     }
 }

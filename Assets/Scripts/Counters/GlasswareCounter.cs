@@ -8,7 +8,6 @@ public class GlasswareCounter : MonoBehaviour
     {
         Glassware,
         Pour,
-        Blender,
         Ingredients,
         Drugs// add more types later if needed
     }
@@ -27,10 +26,6 @@ public class GlasswareCounter : MonoBehaviour
             case CounterType.Pour:
                 HandlePour();
                 break;
-
-            case CounterType.Blender:
-                HandleBlend();
-                break;
             case CounterType.Ingredients:
                 HandleIngredient();
                 break;
@@ -47,7 +42,7 @@ public class GlasswareCounter : MonoBehaviour
         List<GlassType> glasses = MixingManager.instance.GetAvailableGlasses();
         Debug.Log("Drinks count: " + drinks.Count);
         Debug.Log("Glasses count: " + glasses.Count);
-        MixingManager.instance.OpenGlassChoosingUI(drinks, glasses);
+        MixingManager.instance.OpenGlassChoosingUI(drinks);
     }
 
     private void HandlePour()
@@ -69,6 +64,7 @@ public class GlasswareCounter : MonoBehaviour
     }
     private void HandleDrug()
     {
+        MixingManager.instance.OpenDrugsI();
         Debug.Log("Drug Counter Interact");
     }
 

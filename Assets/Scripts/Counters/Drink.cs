@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GlassType { Coupe, Highball, Martini, Collins, Tumbler } // extend as needed
+public enum GlassType { Shot, Highball, Martini, Rocks} // extend as needed
 public enum DrugType { Flower, Leaf, WhitePowder}
 
 public class Drink : MonoBehaviour

@@ -14,21 +14,13 @@ public class DraggableGlass : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private Vector3 startPos;
     private Transform startParent;
 
-    public GlassType glassType { get; private set; }
+    public GlassType glassType;
 
-    [SerializeField] private TextMeshProUGUI labelText;
     private void Awake()
     {
         rt = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         cg = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
-    }
-
-    public void Init(GlassType type)
-    {
-        glassType = type;
-        if (labelText != null)
-            labelText.text = type.ToString();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
