@@ -16,9 +16,9 @@ public class DrinkRecipe : ScriptableObject
         Vodka,
         Gin,
         Rum,
-        Whiskey,
         Lemon,
-        Ice,
+        Lime,
+        Orange,
         Mint
     }
 }
