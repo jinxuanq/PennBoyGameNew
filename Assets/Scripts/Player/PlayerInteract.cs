@@ -12,12 +12,16 @@ public class PlayerInteract : MonoBehaviour
 
     private GlasswareCounter currentGlassware;
     private Customer currentCustomer;
+    private bool isPreviousHit = false;
+    private RaycastHit2D previousHit;
 
 
 
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+        previousHit = Physics2D.Raycast(transform.position, gameInput.GetMovementVectorNormalized(), 0);
+
 
         eButton.SetActive(false);
     }
@@ -41,6 +45,8 @@ public class PlayerInteract : MonoBehaviour
 
     private void HandleDetection()
     {
+        int layer_mask = LayerMask.GetMask("Interactable"); 
+
         Vector2 moveInput = gameInput.GetMovementVectorNormalized();
 
         if (moveInput != Vector2.zero)
@@ -48,21 +54,36 @@ public class PlayerInteract : MonoBehaviour
             lastInteractInput = moveInput;
         }
         float raycastDistance = 1f;
-        RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lastInteractInput, raycastDistance);
+        RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, lastInteractInput, raycastDistance, layer_mask);
         if (raycastHit)
         {
+            if (isPreviousHit)
+            {
+                if (raycastHit.collider != previousHit.collider)
+                {
+                    //Deselects the previous counter before new counter is assigned
+                    DeSelect();
+                }
+            }
+            previousHit = raycastHit;
             //Customer Interact
             if (raycastHit.transform.TryGetComponent(out Customer customer))
             {
                 currentCustomer = customer;
                 eButton.SetActive(true);
+                isPreviousHit = true;
             }
             //Glassware Interact
-            if (raycastHit.transform.TryGetComponent(out GlasswareCounter glasswareCounter))
+            else if (raycastHit.transform.TryGetComponent(out GlasswareCounter glasswareCounter))
             {
                 currentGlassware = glasswareCounter;
                 currentGlassware.GlasswareHighlight(true);
                 eButton.SetActive(true);
+                isPreviousHit = true;
+            }
+            else
+            {
+                DeSelect();
             }
         }
         else
@@ -79,8 +100,8 @@ public class PlayerInteract : MonoBehaviour
             currentGlassware = null;
         }
             currentCustomer = null;
-
         eButton.SetActive(false);
+        isPreviousHit = false;
     }
 
 }
