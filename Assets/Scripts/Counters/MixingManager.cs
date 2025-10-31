@@ -17,6 +17,8 @@ public class MixingManager : MonoBehaviour
     public GameObject ingredientUI;
     public GameObject drugUI;
 
+    public DrugChoosingUI drugChoosingUIScript;
+
     [Header("Data")]
     public List<GlassType> availableGlasses;  // assign in Inspector or populate dynamically
 
@@ -99,8 +101,14 @@ public class MixingManager : MonoBehaviour
         Drink drinkComponent = drinkGO.GetComponent<Drink>();
         if (drinkComponent != null)
         {
+            if (matchedRecipe != null)
+            {
+                drinkComponent.AssignDrink(matchedRecipe); 
+            }
             createdDrinks.Add(drinkComponent);
             Debug.Log($"Drink tracked: {drinkComponent.name}, total drinks: {createdDrinks.Count}");
+
+            drinkComponent.PrintStatus();
         }
         else
         {
@@ -148,10 +156,23 @@ public class MixingManager : MonoBehaviour
 
     public void OpenDrugsI()
     {
-        drugUI.SetActive(true);
+        var drinks = GetAvailableDrinksWithGlass();
+        if (drugChoosingUIScript != null)
+        {
+            drugChoosingUIScript.Open(drinks); 
+            Debug.Log("DrugChoosingUI opened");
+        }
+        else
+        {
+            Debug.LogWarning("DrugChoosingUI script not assigned in MixingManager!");
+            drugUI.SetActive(true); 
+        }
     }
     public void CloseDrugsUI()
     {
+        if (drugChoosingUIScript != null)
+            drugChoosingUIScript.Close();
+
         drugUI.SetActive(false);
     }
 }

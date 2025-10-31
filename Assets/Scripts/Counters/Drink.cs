@@ -1,9 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum GlassType { Shot, Highball, Martini, Rocks} // extend as needed
-public enum DrugType { Flower, Leaf, WhitePowder}
+public enum DrugType { Flower, Leaf, Powder, Grass}
 
 public class Drink : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class Drink : MonoBehaviour
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned glass: {g}");
         ApplyGlassVisual(g);
+        PrintStatus();
     }
     public bool HasGlassAssigned()
     {
@@ -43,6 +44,7 @@ public class Drink : MonoBehaviour
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned drink: {d}");
         ApplyDrinkVisual(d);
+        PrintStatus();
     }
     private void ApplyDrinkVisual(DrinkRecipe d)
     {
@@ -58,6 +60,7 @@ public class Drink : MonoBehaviour
         garnishGrade = score;
         Debug.Log($"{name} assigned garnish: {g}, score: {score}");
         ApplyGarnishVisual(g);
+        PrintStatus();
     }
     private void ApplyGarnishVisual(DrinkRecipe.Ingredient g)
     {
@@ -72,6 +75,7 @@ public class Drink : MonoBehaviour
         // TODO: swap model/mesh/material to show glass visually,
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned blend: {score}");
+       PrintStatus();
     }
 
 
@@ -82,12 +86,25 @@ public class Drink : MonoBehaviour
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned drug: {d}");
         ApplyDrugVisual(d);
+       PrintStatus();
     }
     private void ApplyDrugVisual(DrugType d)
     {
         // implement your visual logic:
         // - enable the correct glass model on the drink
         // - change parent/transform orientation, etc.
+    }
+
+    public bool HasDrugAssigned()
+    {
+        return assignedDrug.HasValue;
+    }
+
+    
+    public void PrintStatus()
+    {
+        Debug.Log($"DEBUG: assignedDrink={assignedDrink}, assignedGlass={assignedGlass}, assignedGarnish={assignedGarnish}, assignedDrug={assignedDrug}");
+
     }
 
 }

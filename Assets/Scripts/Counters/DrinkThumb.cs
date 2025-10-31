@@ -42,23 +42,31 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
         var glass = eventData.pointerDrag?.GetComponent<DraggableGlass>();
         if (glass != null && linkedDrink != null)
         {
-            // Assign glass to the real drink object
             linkedDrink.AssignGlass(glass.glassType);
-
-            // Callback to UI manager
             onAssignedGlassCallback?.Invoke(linkedDrink, glass.glassType);
-
-            // Visual feedback: you could set an icon on this thumb or disable the glass button
             Debug.Log($"Dropped glass {glass.glassType} onto drink {linkedDrink.name}");
+            return; //Stop here ¡ª it was a glass
         }
+
+        // ========== INGREDIENT / DRUG DROP ========== 
         var ingredient = eventData.pointerDrag?.GetComponent<DraggableIngredients>();
         if (ingredient != null && linkedDrink != null)
         {
-            // Assign glass to the real drink object
-            linkedDrink.AssignGarnish(ingredient.ingredientType, ingredient.score);
-
-            // Callback to UI manager
-            onAssignedIngredientCallback?.Invoke(linkedDrink, ingredient);
+            // Check if ingredient should be treated as a drug
+            if (IsDrug(ingredient.ingredientType))
+            {
+                // Drug path
+                linkedDrink.AssignDrug(ConvertToDrugType(ingredient.ingredientType));
+                onAssignedIngredientCallback?.Invoke(linkedDrink, ingredient);
+                Debug.Log($"Dropped drug {ingredient.ingredientType} onto drink {linkedDrink.name}");
+            }
+            else
+            {
+                // Regular garnish path
+                linkedDrink.AssignGarnish(ingredient.ingredientType, ingredient.score);
+                onAssignedIngredientCallback?.Invoke(linkedDrink, ingredient);
+                Debug.Log($"Dropped garnish {ingredient.ingredientType} onto drink {linkedDrink.name}");
+            }
         }
     }
 
@@ -67,5 +75,25 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
     {
         if (linkedDrink != null)
             Debug.Log($"Clicked thumbnail for drink: {linkedDrink.name}");
+    }
+
+    private bool IsDrug(DrinkRecipe.Ingredient ing)
+    {
+        return ing == DrinkRecipe.Ingredient.Flower
+            || ing == DrinkRecipe.Ingredient.Leaf
+            || ing == DrinkRecipe.Ingredient.Powder
+            || ing == DrinkRecipe.Ingredient.Grass;
+    }
+
+    private DrugType ConvertToDrugType(DrinkRecipe.Ingredient ing)
+    {
+        switch (ing)
+        {
+            case DrinkRecipe.Ingredient.Flower: return DrugType.Flower;
+            case DrinkRecipe.Ingredient.Leaf: return DrugType.Leaf;
+            case DrinkRecipe.Ingredient.Powder: return DrugType.Powder;
+            case DrinkRecipe.Ingredient.Grass: return DrugType.Grass;
+            default: return DrugType.Powder;
+        }
     }
 }
