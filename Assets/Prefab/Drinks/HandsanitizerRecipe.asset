@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68030fcd0e49e354f970020ef4ac2b1f, type: 3}
+  m_Name: HandsanitizerRecipe
+  m_EditorClassIdentifier: 
+  drinkName: Handsanitizer
+  drinkPrefab: {fileID: 7340860712413389654, guid: b65de5f4adfa4eb48a261945fda51dde, type: 3}
+  requiredIngredients: 00000000020000000100000003000000
