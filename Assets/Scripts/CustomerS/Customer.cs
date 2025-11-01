@@ -11,7 +11,7 @@ public class Customer : MonoBehaviour
     private bool reachedTable = false;
     private Rigidbody2D rb;
     private bool interactable = false;
-    [SerializeField] private Order currOrder;
+    [SerializeField] private Drink currOrder;
     private Dialogue dialogueBox;
 
     public event System.Action<Customer> OnDrinkOrdered;
@@ -87,7 +87,7 @@ public class Customer : MonoBehaviour
     // --------------------
     // Orders and UI
     // --------------------
-    public void AssignOrder(Order o)
+    public void AssignOrder(Drink o)
     {
         currOrder = o;
 
@@ -96,7 +96,7 @@ public class Customer : MonoBehaviour
             GameManager.instance.AddOrderToUI(this);
     }
 
-    public Order GetOrder()
+    public Drink GetOrder()
     {
         return currOrder;
     }

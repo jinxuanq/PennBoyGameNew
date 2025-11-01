@@ -23,7 +23,30 @@ public class DrinkRecipe : ScriptableObject
         Flower,
         Leaf,
         Powder,
-        Grass,
+        Crystal
+    }
+
+    public enum Drinks
+    {
+        Tequila,
+        Vodka,
+        Gin,
+        Rum,
+        
+    }
+    public enum Garnish
+    {
+        Lemon,
+        Lime,
+        Orange,
+        Mint,
+    }
+    
+    public enum Drugs
+    {
+        Flower,
+        Leaf,
+        Powder,
         Crystal
     }
 }
