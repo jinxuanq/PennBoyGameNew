@@ -20,7 +20,10 @@ public class Customer : MonoBehaviour
     // Name
     public string customerName;
 
-    public string CustomerType;
+    public string customerType;
+
+    [SerializeField] private CustomerVisual customerVisual;
+
     public event System.Action OnCustomerLeave; // Event to notify spawner
 
     void Start()
@@ -40,6 +43,10 @@ public class Customer : MonoBehaviour
         }
     }
 
+    public void AssignSprite()
+    {
+        customerVisual.SetSprite(customerType);
+    }
     public void AssignTable(Table newTable)
     {
         table = newTable;
@@ -71,7 +78,7 @@ public class Customer : MonoBehaviour
             GameInput.instance.LockInput(true);
             dialogueBox.AddText("I want sum of dat good shit");
             dialogueBox.AddText("gimme juice");
-            //dialogueBox.SetSprite(CustomerType);
+            dialogueBox.SetSprite(customerType);
             dialogueBox.StartDialogue();
             dialogueBox.OnDialogueEnded += (c) =>
             {

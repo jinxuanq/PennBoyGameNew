@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 661758989225426328}
   - component: {fileID: 5544530424261735739}
+  - component: {fileID: 1719603659493302477}
   m_Layer: 3
   m_Name: CustomerVisual
   m_TagString: Untagged
@@ -84,6 +85,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1719603659493302477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736316388690098021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb846dbeab1f32241954760460b24b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fentFolder: {fileID: 21300000, guid: 47bb0f2750349bd4faf92cc3ab2c978e, type: 3}
+  loudTweaker: {fileID: 21300000, guid: c7c295d9a933c314caa8120b2fc7f3b2, type: 3}
 --- !u!1 &8810890664922983966
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  currOrder:
-    drink: {fileID: 0}
-    name: 
+  currOrder: {fileID: 0}
   customerName: 
+  customerType: 
+  customerVisual: {fileID: 1719603659493302477}

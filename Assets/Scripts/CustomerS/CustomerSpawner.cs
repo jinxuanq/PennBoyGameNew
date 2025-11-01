@@ -25,6 +25,8 @@ public class CustomerSpawner : MonoBehaviour
     // Names
     private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
 
+    private List<string> customerTypes = new List<string> { "fentFolder", "loudTweaker" };
+
     private List<string> namesInUse = new List<string>();
 
 
@@ -86,9 +88,11 @@ public class CustomerSpawner : MonoBehaviour
         GameObject customerObj = Instantiate(customerPrefab, transform.position, Quaternion.identity);
         Customer customer = customerObj.GetComponent<Customer>();
         customer.customerName = customerName;
+        customer.customerType = customerTypes[Random.Range(0, 2)];
         customerObj.name = customerName;       // set GameObject name in hierarchy
         customer.SetDialogueBox(dialogueBox);
         customer.AssignTable(chosenTable);
+        customer.AssignSprite();
 
         //Assign Order to Customer after table reached
         customer.OnDrinkOrdered += (c) =>
@@ -97,7 +101,6 @@ public class CustomerSpawner : MonoBehaviour
             d.drinkRecipe = (allDrinks[Random.Range(0, allDrinks.Count)]);
             d.garnish = garnishes[Random.Range(0, garnishes.Count)];
             d.drug = drugs[Random.Range(0, drugs.Count)];
-
             orders.Add(d);
             customer.AssignOrder(d);
             Debug.Log(customer.GetOrder());
