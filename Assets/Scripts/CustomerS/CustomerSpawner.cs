@@ -16,7 +16,7 @@ public class CustomerSpawner : MonoBehaviour
 
     //Drink Order
     private List<DrinkRecipe> allDrinks;
-    public List<Order> orders;
+    public List<Drink> orders;
 
     // Names
     private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
@@ -86,12 +86,13 @@ public class CustomerSpawner : MonoBehaviour
         //Assign Order to Customer after table reached
         customer.OnDrinkOrdered += (c) =>
         {
-            Order o = new Order(allDrinks[Random.Range(0, allDrinks.Count)]);
-            orders.Add(o);
-            customer.AssignOrder(o);
+            Drink d = new Drink();
+            d.AssignDrink(allDrinks[Random.Range(0, allDrinks.Count)]);
+            orders.Add(d);
+            customer.AssignOrder(d);
             Debug.Log(customer.GetOrder());
 
-            c.OnCustomerLeave += () => { orders.Remove(o); }; // optional: remove order from spawner's list}
+            c.OnCustomerLeave += () => { orders.Remove(d); }; // optional: remove order from spawner's list}
         };
         //Debug.Log(o);
 

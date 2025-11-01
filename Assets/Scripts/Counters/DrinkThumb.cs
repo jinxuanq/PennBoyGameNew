@@ -82,7 +82,7 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
         return ing == DrinkRecipe.Ingredient.Flower
             || ing == DrinkRecipe.Ingredient.Leaf
             || ing == DrinkRecipe.Ingredient.Powder
-            || ing == DrinkRecipe.Ingredient.Grass;
+            || ing == DrinkRecipe.Ingredient.Crystal;
     }
 
     private DrugType ConvertToDrugType(DrinkRecipe.Ingredient ing)
@@ -92,7 +92,7 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
             case DrinkRecipe.Ingredient.Flower: return DrugType.Flower;
             case DrinkRecipe.Ingredient.Leaf: return DrugType.Leaf;
             case DrinkRecipe.Ingredient.Powder: return DrugType.Powder;
-            case DrinkRecipe.Ingredient.Grass: return DrugType.Grass;
+            case DrinkRecipe.Ingredient.Crystal: return DrugType.Crystal;
             default: return DrugType.Powder;
         }
     }
