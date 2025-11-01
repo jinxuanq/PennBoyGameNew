@@ -14,6 +14,7 @@ public class MixingManager : MonoBehaviour
     [Header("UI References")]
     public GameObject glassChoosingUI;  // drag the Canvas object here
     public GameObject pourmixingUI;  // assign your mixing canvas here
+    public GameObject mixGameUI;
     public GameObject ingredientUI;
     public GameObject drugUI;
 
@@ -50,6 +51,7 @@ public class MixingManager : MonoBehaviour
 
         isMixing = false;
         pourmixingUI.SetActive(false);
+        mixGameUI.SetActive(false);
         currentMix.Clear();
         Debug.Log("Mixing UI closed");
     }
@@ -117,6 +119,9 @@ public class MixingManager : MonoBehaviour
 
         currentMix.Clear(); // reset ingredients
         Debug.Log("Mix complete, UI still open");
+
+        mixGameUI.SetActive(true);
+        mixGameUI.GetComponent<MixGame>().Begin();
     }
 
     /// <summary>
