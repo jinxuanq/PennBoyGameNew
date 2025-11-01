@@ -108,10 +108,3 @@ public class Drink : MonoBehaviour
     }
 
 }
-
-public class DrinkOrder : MonoBehaviour
-{
-    public DrinkRecipe drinkRecipe;
-    public string garnish;
-    public string drug;
-}

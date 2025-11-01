@@ -16,7 +16,7 @@ public class CustomerSpawner : MonoBehaviour
 
     //Drink Order
     private List<DrinkRecipe> allDrinks;
-    public List<Drink> orders;
+    public List<DrinkOrder> orders;
 
     //Garnish
     private List<string> garnishes = new List<string> { "Lemon", "Lime", "Orange", "Mint"};
@@ -92,9 +92,11 @@ public class CustomerSpawner : MonoBehaviour
         //Assign Order to Customer after table reached
         customer.OnDrinkOrdered += (c) =>
         {
-            Drink d = new Drink();
-            d.AssignDrink(allDrinks[Random.Range(0, allDrinks.Count)]);
-            
+            DrinkOrder d = gameObject.AddComponent<DrinkOrder>();
+            d.drinkRecipe = (allDrinks[Random.Range(0, allDrinks.Count)]);
+            d.garnish = garnishes[Random.Range(0, garnishes.Count)];
+            d.drug = drugs[Random.Range(0, drugs.Count)];
+
             orders.Add(d);
             customer.AssignOrder(d);
             Debug.Log(customer.GetOrder());
