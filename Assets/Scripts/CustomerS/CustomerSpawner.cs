@@ -24,6 +24,7 @@ public class CustomerSpawner : MonoBehaviour
 
     // Names
     private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
+
     private List<string> namesInUse = new List<string>();
 
 

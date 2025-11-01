@@ -9,6 +9,7 @@ public class Dialogue : MonoBehaviour
 {
 
     public TextMeshProUGUI textComponent;
+    public IconSelector icon;
     public List<string> lines = new List<string>();
     public float textSpeed;
     private bool typing;
@@ -49,7 +50,6 @@ public class Dialogue : MonoBehaviour
             }
             else
             {
-                Debug.Log("End");
                 OnDialogueEnded?.Invoke(this);
             }
 
@@ -59,6 +59,11 @@ public class Dialogue : MonoBehaviour
     public void AddText(String newText)
     {
         lines.Add(newText);
+    }
+
+    public void SetSprite(String sprite)
+    {
+        icon.Sprite(sprite);
     }
 
     public void StartDialogue()

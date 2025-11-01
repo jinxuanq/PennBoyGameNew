@@ -14,10 +14,13 @@ public class Customer : MonoBehaviour
     [SerializeField] private Drink currOrder;
     private Dialogue dialogueBox;
 
+
     public event System.Action<Customer> OnDrinkOrdered;
 
     // Name
     public string customerName;
+
+    public string CustomerType;
     public event System.Action OnCustomerLeave; // Event to notify spawner
 
     void Start()
@@ -68,6 +71,7 @@ public class Customer : MonoBehaviour
             GameInput.instance.LockInput(true);
             dialogueBox.AddText("I want sum of dat good shit");
             dialogueBox.AddText("gimme juice");
+            //dialogueBox.SetSprite(CustomerType);
             dialogueBox.StartDialogue();
             dialogueBox.OnDialogueEnded += (c) =>
             {
