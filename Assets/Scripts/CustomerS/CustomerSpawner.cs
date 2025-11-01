@@ -18,9 +18,15 @@ public class CustomerSpawner : MonoBehaviour
     private List<DrinkRecipe> allDrinks;
     public List<Drink> orders;
 
+    //Garnish
+    private List<string> garnishes = new List<string> { "Lemon", "Lime", "Orange", "Mint"};
+    private List<string> drugs = new List<string> { "Flower", "Leaf", "Powder", "Crystal" };
+
     // Names
     private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
     private List<string> namesInUse = new List<string>();
+
+
 
     void Start()
     {
@@ -88,6 +94,7 @@ public class CustomerSpawner : MonoBehaviour
         {
             Drink d = new Drink();
             d.AssignDrink(allDrinks[Random.Range(0, allDrinks.Count)]);
+            
             orders.Add(d);
             customer.AssignOrder(d);
             Debug.Log(customer.GetOrder());
