@@ -9,6 +9,8 @@ public class Dialogue : MonoBehaviour
 {
 
     public TextMeshProUGUI textComponent;
+
+    public TextMeshProUGUI nameText;
     public IconSelector icon;
     public List<string> lines = new List<string>();
     public float textSpeed;
@@ -61,9 +63,10 @@ public class Dialogue : MonoBehaviour
         lines.Add(newText);
     }
 
-    public void SetSprite(String sprite)
+    public void SetSprite(String sprite, String name)
     {
         icon.Sprite(sprite);
+        nameText.text = name;
     }
 
     public void StartDialogue()

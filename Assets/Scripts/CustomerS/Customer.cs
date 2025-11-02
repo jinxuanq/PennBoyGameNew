@@ -78,7 +78,7 @@ public class Customer : MonoBehaviour
             GameInput.instance.LockInput(true);
             dialogueBox.AddText("I want sum of dat good shit");
             dialogueBox.AddText("gimme juice");
-            dialogueBox.SetSprite(customerType);
+            dialogueBox.SetSprite(customerType, customerName);
             dialogueBox.StartDialogue();
             dialogueBox.OnDialogueEnded += (c) =>
             {
