@@ -92,7 +92,8 @@ public class MixingManager : MonoBehaviour
         if (matchedRecipe != null)
         {
             Debug.Log("Created drink: " + matchedRecipe.drinkName);
-            drinkGO = Instantiate(matchedRecipe.drinkPrefab, transform.position, Quaternion.identity);
+            drinkGO = Instantiate(matchedRecipe.drinkPrefab, new Vector3 (2000,2000,2000), Quaternion.identity);
+            Inventory.instance.PopulateDrinks(GetAvailableDrinksWithGlass());
         }
         else
         {
@@ -121,7 +122,7 @@ public class MixingManager : MonoBehaviour
         Debug.Log("Mix complete, UI still open");
 
         mixGameUI.SetActive(true);
-        mixGameUI.GetComponent<MixGame>().Begin();
+        mixGameUI.GetComponent<MixGame>().Begin(drinkComponent);
     }
 
     /// <summary>

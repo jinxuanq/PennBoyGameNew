@@ -7,6 +7,7 @@ public class CustomerVisual : MonoBehaviour
     SpriteRenderer spriteRenderer;
     [SerializeField] Sprite fentFolder;
     [SerializeField] Sprite loudTweaker;
+    [SerializeField] Sprite susMan;
 
     void Awake()
     { 
@@ -26,6 +27,10 @@ public class CustomerVisual : MonoBehaviour
         if (customerType == "loudTweaker")
         {
             spriteRenderer.sprite = loudTweaker;
+        }
+        if (customerType == "susMan")
+        {
+            spriteRenderer.sprite = susMan;
         }
     }
 

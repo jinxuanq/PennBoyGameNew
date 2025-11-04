@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: Mojito
   drinkPrefab: {fileID: 8501952142245408024, guid: d86a688730659be4e86d0cdff44bbed0, type: 3}
+  drinkSprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   requiredIngredients: 0100000003000000

@@ -11,7 +11,7 @@ public class Drink : MonoBehaviour
     public DrinkRecipe assignedDrink = null;
     public DrinkRecipe.Ingredient? assignedGarnish = null;
     public float garnishGrade = 0;
-    public float blendGrade = 0;
+    public float mixGrade = 0;
     public DrugType? assignedDrug = null;
 
     // public Sprite thumbSprite; // optional thumbnail for UI
@@ -69,9 +69,9 @@ public class Drink : MonoBehaviour
         // - change parent/transform orientation, etc.
     }
 
-    public void AssignBlender(float score)
+    public void AssignMix(float score)
     {
-        blendGrade = score;
+        mixGrade = score;
         // TODO: swap model/mesh/material to show glass visually,
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned blend: {score}");

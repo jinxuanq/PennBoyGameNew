@@ -7,6 +7,7 @@ public class DrinkRecipe : ScriptableObject
 {
     public string drinkName;
     public GameObject drinkPrefab;
+    [SerializeField] public Sprite drinkSprite;
 
     public List<Ingredient> requiredIngredients = new List<Ingredient>();
 

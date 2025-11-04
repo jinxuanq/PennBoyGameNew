@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
-public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class IngredientZone : MonoBehaviour, IDropHandler
 {
     private GameObject ing;
 
@@ -105,6 +107,8 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         {
             if (!d.HasGlassAssigned()) continue; // skip drinks without a glass
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
+            go.GetComponentInChildren<Image>().sprite = d.assignedDrink.drinkSprite;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = d.assignedDrink.drinkName;
             var thumb = go.GetComponent<DrinkThumb>();
             if (thumb != null) thumb.Init(d, OnIngredientAssignedToDrink);
             spawnedDrinkThumbs.Add(go);
@@ -121,11 +125,6 @@ public class IngredientZone : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             Destroy(thumbToRemove);
         }
     }
-
-
-    // Optional visual feedback
-    public void OnPointerEnter(PointerEventData eventData) { /* highlight zone */ }
-    public void OnPointerExit(PointerEventData eventData) { /* remove highlight */ }
 
     // Utility method for OnEndDrag
     public static bool IsPointerOverDropZone(PointerEventData eventData)

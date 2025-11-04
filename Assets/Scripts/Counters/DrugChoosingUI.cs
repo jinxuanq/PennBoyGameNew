@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DrugChoosingUI : MonoBehaviour
 {
@@ -40,6 +42,9 @@ public class DrugChoosingUI : MonoBehaviour
 
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
             var thumb = go.GetComponent<DrinkThumb>();
+
+            go.GetComponentInChildren<Image>().sprite = d.assignedDrink.drinkSprite;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = d.assignedDrink.drinkName;
 
             // Initialize for ingredient assignment callback
             if (thumb != null)

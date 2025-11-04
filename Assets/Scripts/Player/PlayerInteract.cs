@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    public static PlayerInteract instance;
 
     private Vector2 lastInteractInput;
     [SerializeField] private GameInput gameInput;
@@ -15,7 +16,14 @@ public class PlayerInteract : MonoBehaviour
     private bool isPreviousHit = false;
     private RaycastHit2D previousHit;
 
+    public Drink selectedDrink;
 
+
+    private void Awake()
+    {
+        if (instance) Destroy(gameObject);
+        else instance = this;
+    }
 
     private void Start()
     {
@@ -102,6 +110,18 @@ public class PlayerInteract : MonoBehaviour
             currentCustomer = null;
         eButton.SetActive(false);
         isPreviousHit = false;
+    }
+
+    private void Serve()
+    {
+        if (currentCustomer != null)
+        {
+            if(selectedDrink != null)
+            {
+                currentCustomer.CompleteOrder(selectedDrink);
+                Destroy(selectedDrink.gameObject);
+            }
+        }
     }
 
 }

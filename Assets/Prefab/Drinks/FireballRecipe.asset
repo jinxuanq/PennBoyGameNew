@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drinkName: Fireball
   drinkPrefab: {fileID: 5735478202671494173, guid: 31a2533c4cd1fed47bee6d10dddc3b32, type: 3}
+  drinkSprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
   requiredIngredients: 0000000001000000

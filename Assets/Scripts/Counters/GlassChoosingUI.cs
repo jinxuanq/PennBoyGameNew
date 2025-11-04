@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class GlassChoosingUI : MonoBehaviour
 {
@@ -40,6 +42,8 @@ public class GlassChoosingUI : MonoBehaviour
         {
             if (d.HasGlassAssigned()) continue; // skip drinks already assigned
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
+            go.GetComponentInChildren<Image>().sprite = d.assignedDrink.drinkSprite;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = d.assignedDrink.drinkName;
             var thumb = go.GetComponent<DrinkThumb>();
             if (thumb != null) thumb.Init(d, OnGlassAssignedToDrink);
             spawnedDrinkThumbs.Add(go);

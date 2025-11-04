@@ -14,6 +14,8 @@ public class Customer : MonoBehaviour
     [SerializeField] private DrinkOrder currOrder;
     private Dialogue dialogueBox;
 
+    private static Customer currCustomer;
+
 
     public event System.Action<Customer> OnDrinkOrdered;
 
@@ -75,6 +77,8 @@ public class Customer : MonoBehaviour
         Debug.Log("Interacted");
         if (interactable)
         {
+            Customer.currCustomer = this;
+
             GameInput.instance.LockInput(true);
             dialogueBox.AddText("I want sum of dat good shit");
             dialogueBox.AddText("gimme juice");
@@ -120,12 +124,12 @@ public class Customer : MonoBehaviour
     // --------------------
     // Call when the customer��s order is served
     // --------------------
-    public void CompleteOrder()
+    public void CompleteOrder(Drink d)
     {
         if (GameManager.instance != null)
         {
             // Give reward
-            GameManager.instance.AddMoney(10);
+            GameManager.instance.AddMoney((int)currOrder.CompareScore(d));
 
             // Remove order from UI
             GameManager.instance.RemoveOrderFromUI(this);

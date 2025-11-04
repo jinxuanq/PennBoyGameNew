@@ -25,7 +25,7 @@ public class CustomerSpawner : MonoBehaviour
     // Names
     private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
 
-    private List<string> customerTypes = new List<string> { "fentFolder", "loudTweaker" };
+    private List<string> customerTypes = new List<string> { "fentFolder", "loudTweaker", "susMan" };
 
     private List<string> namesInUse = new List<string>();
 
@@ -88,7 +88,7 @@ public class CustomerSpawner : MonoBehaviour
         GameObject customerObj = Instantiate(customerPrefab, transform.position, Quaternion.identity);
         Customer customer = customerObj.GetComponent<Customer>();
         customer.customerName = customerName;
-        customer.customerType = customerTypes[Random.Range(0, 2)];
+        customer.customerType = customerTypes[Random.Range(0, customerTypes.Count)];
         customerObj.name = customerName;       // set GameObject name in hierarchy
         customer.SetDialogueBox(dialogueBox);
         customer.AssignTable(chosenTable);

@@ -30,7 +30,7 @@ public class DrinkOrder : MonoBehaviour
     {
         int score = 0;
         if (d.assignedDrink.drinkName.Equals(drinkRecipe.drinkName)) score += 100; else score += 50;
-        score += (int) d.blendGrade;
+        score += (int) d.mixGrade;
         if (d.assignedGarnish.ToString().Equals(garnish.ToString())) score += 100; else score += 50;
         score += (int) d.garnishGrade;
         if (d.assignedDrug.ToString().Equals(drug.ToString())) score += 100; else score += 50;
