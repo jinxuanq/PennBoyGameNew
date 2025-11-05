@@ -31,6 +31,7 @@ public class MixGame : MonoBehaviour
     }
     private IEnumerator Game() 
     {
+        timer = 0;
         leftIG.color = Color.white;
         rightIG.color = Color.white;
 

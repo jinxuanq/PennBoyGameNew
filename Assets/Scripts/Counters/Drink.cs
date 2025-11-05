@@ -24,6 +24,8 @@ public class Drink : MonoBehaviour
         Debug.Log($"{name} assigned glass: {g}");
         ApplyGlassVisual(g);
         PrintStatus();
+
+        Inventory.instance.PopulateDrinks();
     }
     public bool HasGlassAssigned()
     {
@@ -45,6 +47,8 @@ public class Drink : MonoBehaviour
         Debug.Log($"{name} assigned drink: {d}");
         ApplyDrinkVisual(d);
         PrintStatus();
+
+        Inventory.instance.PopulateDrinks();
     }
     private void ApplyDrinkVisual(DrinkRecipe d)
     {
@@ -61,6 +65,8 @@ public class Drink : MonoBehaviour
         Debug.Log($"{name} assigned garnish: {g}, score: {score}");
         ApplyGarnishVisual(g);
         PrintStatus();
+
+        Inventory.instance.PopulateDrinks();
     }
     private void ApplyGarnishVisual(DrinkRecipe.Ingredient g)
     {
@@ -75,7 +81,9 @@ public class Drink : MonoBehaviour
         // TODO: swap model/mesh/material to show glass visually,
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned blend: {score}");
-       PrintStatus();
+        PrintStatus();
+
+        Inventory.instance.PopulateDrinks();
     }
 
 
@@ -86,7 +94,9 @@ public class Drink : MonoBehaviour
         // or spawn a glass prefab parented to this drink.
         Debug.Log($"{name} assigned drug: {d}");
         ApplyDrugVisual(d);
-       PrintStatus();
+        PrintStatus();
+
+        Inventory.instance.PopulateDrinks();
     }
     private void ApplyDrugVisual(DrugType d)
     {
@@ -99,8 +109,16 @@ public class Drink : MonoBehaviour
     {
         return assignedDrug.HasValue;
     }
+    public bool HasIngAssigned()
+    {
+        return assignedGarnish.HasValue;
+    }
+    public bool Finished()
+    {
+        return (this.HasDrugAssigned()) && (this.HasGlassAssigned() && (this.HasIngAssigned()));
+    }
 
-    
+
     public void PrintStatus()
     {
         Debug.Log($"DEBUG: assignedDrink={assignedDrink}, assignedGlass={assignedGlass}, assignedGarnish={assignedGarnish}, assignedDrug={assignedDrug}");

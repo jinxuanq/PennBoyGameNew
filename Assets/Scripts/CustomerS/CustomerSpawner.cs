@@ -103,7 +103,6 @@ public class CustomerSpawner : MonoBehaviour
             d.drug = drugs[Random.Range(0, drugs.Count)];
             orders.Add(d);
             customer.AssignOrder(d);
-            Inventory.instance.PopulateDrinks(MixingManager.instance.GetAvailableDrinks());
             Debug.Log(customer.GetOrder());
 
             c.OnCustomerLeave += () => { orders.Remove(d); }; // optional: remove order from spawner's list}

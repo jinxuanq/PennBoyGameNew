@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private GameObject drinkThumbPrefab;     // prefab with DrinkThumb component
     [SerializeField] private Transform drinkThumbParent;      // where to instantiate drink thumbnails
-    private List<GameObject> spawnedDrinkThumbs = new List<GameObject>();
+    private List<GameObject> inventoryDrinkList = new List<GameObject>();
 
     private int selectedIndex = -1;
 
@@ -22,29 +22,44 @@ public class Inventory : MonoBehaviour
         else instance = this;
     }
 
-    public void PopulateDrinks(List<Drink> drinks)
+    private void Update()
     {
+        if (MixingManager.instance.UIOpen)
+        {
+            foreach (var u in inventoryDrinkList)
+            {
+                u.SetActive(false);
+            }
+        }
+        else
+        {
+            foreach (var u in inventoryDrinkList)
+            {
+                u.SetActive(true);
+            }
+        }
+    }
+
+    public void PopulateDrinks()
+    {
+
+        List<Drink> drinks = MixingManager.instance.createdDrinks;
+
+
         for (int i = 0; i < drinkThumbParent.childCount; i++)
         {
             Destroy(drinkThumbParent.GetChild(i).gameObject);
         }
         foreach (var d in drinks)
         {
-            if (!d.HasGlassAssigned()) continue; // skip drinks without a glass
+            if (!d.Finished()) continue; // skip drinks without a glass
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
             go.GetComponentInChildren<TextMeshProUGUI>().text = d.assignedDrink.drinkName;
-            go.GetComponentInChildren<Image>().sprite = d.assignedDrink.drinkSprite;
-            go.GetComponentInChildren<DrinkButton>().thisDrink = d;
-            spawnedDrinkThumbs.Add(go);
+            go.GetComponentInChildren<UnityEngine.UI.Image>().sprite = d.assignedDrink.drinkSprite;
+            go.GetComponentInChildren<DrinkThumb>().linkedDrink = d;
+            inventoryDrinkList.Add(go);
         }
 
-        Debug.Log("populated");
+        Debug.Log("populated inventory");
     }
-
-    private void DisplayInventory()
-    {
-        
-    }
-
-    
 }

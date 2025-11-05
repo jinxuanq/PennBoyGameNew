@@ -23,10 +23,12 @@ public class MixingManager : MonoBehaviour
     [Header("Data")]
     public List<GlassType> availableGlasses;  // assign in Inspector or populate dynamically
 
-    private List<Drink> createdDrinks = new List<Drink>(); // store all drinks created by Mix()
+    public List<Drink> createdDrinks = new List<Drink>(); // store all drinks created by Mix()
 
     private List<DrinkRecipe.Ingredient> currentMix = new List<DrinkRecipe.Ingredient>();
     private bool isMixing = false;
+
+    public bool UIOpen = false;
 
     private void Awake()
     {
@@ -43,6 +45,8 @@ public class MixingManager : MonoBehaviour
         currentMix.Clear();
         pourmixingUI.SetActive(true);
         Debug.Log("Mixing UI opened");
+
+        UIOpen = true;
     }
 
     public void CloseMixingUI()
@@ -54,6 +58,8 @@ public class MixingManager : MonoBehaviour
         mixGameUI.SetActive(false);
         currentMix.Clear();
         Debug.Log("Mixing UI closed");
+
+        UIOpen = false;
     }
 
     public void OpenGlassChoosingUI(List<Drink> drinks)
@@ -64,11 +70,19 @@ public class MixingManager : MonoBehaviour
         {
             glassChoosingUI.GetComponent<GlassChoosingUI>().Open(drinks);
             Debug.Log("GlassChoosingUI opened");
+
+            UIOpen = true;
         }
         else
         {
             Debug.LogWarning("GlassChoosingUI reference not set in MixingManager!");
         }
+    }
+    public void CloseGlassUI()
+    {
+        glassChoosingUI.GetComponent<GlassChoosingUI>().Close();
+        UIOpen = false;
+
     }
 
     public void AddIngredient(DrinkRecipe.Ingredient ingredient)
@@ -93,7 +107,6 @@ public class MixingManager : MonoBehaviour
         {
             Debug.Log("Created drink: " + matchedRecipe.drinkName);
             drinkGO = Instantiate(matchedRecipe.drinkPrefab, new Vector3 (2000,2000,2000), Quaternion.identity);
-            Inventory.instance.PopulateDrinks(GetAvailableDrinksWithGlass());
         }
         else
         {
@@ -154,10 +167,14 @@ public class MixingManager : MonoBehaviour
     {
         ingredientUI.SetActive(true);
         ingredientUI.GetComponentInChildren<IngredientZone>().PopulateDrinks(GetAvailableDrinksWithGlass());
+        UIOpen = true;
+
     }
     public void CloseIngredientsUI()
     {
         ingredientUI.SetActive(false);
+        UIOpen = false;
+
     }
 
     public void OpenDrugsI()
@@ -167,6 +184,8 @@ public class MixingManager : MonoBehaviour
         {
             drugChoosingUIScript.Open(drinks); 
             Debug.Log("DrugChoosingUI opened");
+
+            UIOpen = true;
         }
         else
         {
@@ -180,6 +199,8 @@ public class MixingManager : MonoBehaviour
             drugChoosingUIScript.Close();
 
         drugUI.SetActive(false);
+
+        UIOpen = false;
     }
 }
 

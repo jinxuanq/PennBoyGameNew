@@ -42,7 +42,7 @@ public class GlassChoosingUI : MonoBehaviour
         {
             if (d.HasGlassAssigned()) continue; // skip drinks already assigned
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
-            go.GetComponentInChildren<Image>().sprite = d.assignedDrink.drinkSprite;
+            go.GetComponentInChildren<UnityEngine.UI.Image>().sprite = d.assignedDrink.drinkSprite;
             go.GetComponentInChildren<TextMeshProUGUI>().text = d.assignedDrink.drinkName;
             var thumb = go.GetComponent<DrinkThumb>();
             if (thumb != null) thumb.Init(d, OnGlassAssignedToDrink);
@@ -64,7 +64,7 @@ public class GlassChoosingUI : MonoBehaviour
         // Optionally auto-close if all drinks are assigned
         if (autoCloseOnSelect && spawnedDrinkThumbs.Count == 0)
         {
-            Close();
+            MixingManager.instance.CloseGlassUI();
         }
     }
     private void ClearDrinkThumbs()

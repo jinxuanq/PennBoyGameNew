@@ -105,9 +105,9 @@ public class IngredientZone : MonoBehaviour, IDropHandler
         }
         foreach (var d in drinks)
         {
-            if (!d.HasGlassAssigned()) continue; // skip drinks without a glass
+            if (d.HasIngAssigned()) continue; // skip drinks without a ing
             var go = Instantiate(drinkThumbPrefab, drinkThumbParent, false);
-            go.GetComponentInChildren<Image>().sprite = d.assignedDrink.drinkSprite;
+            go.GetComponentInChildren<UnityEngine.UI.Image>().sprite = d.assignedDrink.drinkSprite;
             go.GetComponentInChildren<TextMeshProUGUI>().text = d.assignedDrink.drinkName;
             var thumb = go.GetComponent<DrinkThumb>();
             if (thumb != null) thumb.Init(d, OnIngredientAssignedToDrink);

@@ -2560,7 +2560,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 293893301}
-  m_Father: {fileID: 1317602056}
+  m_Father: {fileID: 1918547836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4795,8 +4795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -396.00006, y: -525}
-  m_SizeDelta: {x: 191.70044, y: 0}
+  m_AnchoredPosition: {x: -340.07492, y: -415}
+  m_SizeDelta: {x: 79.85016, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &983254159
 MonoBehaviour:
@@ -4886,7 +4886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d496cff5ab08547aa4bf649987dbf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drinkThumbPrefab: {fileID: 3580505023368112752, guid: cd71a24e34daa9146a1c2250692f083b, type: 3}
+  drinkThumbPrefab: {fileID: 3580505023368112752, guid: cbdf24c88d97d844e982e51489fe3216, type: 3}
   drinkThumbParent: {fileID: 983254158}
   currDrink: {fileID: 0}
 --- !u!1 &1001135064
@@ -6299,7 +6299,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 433031160}
   - {fileID: 1316124532}
   - {fileID: 467924530}
   - {fileID: 1405773373}
@@ -9502,6 +9501,7 @@ RectTransform:
   - {fileID: 56802594}
   - {fileID: 583487507}
   - {fileID: 394671277}
+  - {fileID: 433031160}
   m_Father: {fileID: 1352567156}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10381,6 +10381,8 @@ MonoBehaviour:
   drugUI: {fileID: 662412859}
   drugChoosingUIScript: {fileID: 662412861}
   availableGlasses: 00000000010000000200000003000000
+  createdDrinks: []
+  UIOpen: 0
 --- !u!1 &2096783491
 GameObject:
   m_ObjectHideFlags: 0
