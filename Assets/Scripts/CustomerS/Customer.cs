@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class Customer : MonoBehaviour
     private bool reachedTable = false;
     private Rigidbody2D rb;
     private bool interactable = false;
+    private bool hasOrdered = false;
+    private int dialogueIndex;
     [SerializeField] private DrinkOrder currOrder;
     private Dialogue dialogueBox;
 
@@ -27,6 +30,10 @@ public class Customer : MonoBehaviour
     [SerializeField] private CustomerVisual customerVisual;
 
     public event System.Action OnCustomerLeave; // Event to notify spawner
+
+    private List<string> customerDialogueOne = new List<string>();
+    private List<string> customerDialogueTwo = new List<string>();
+    private List<string> customerDialogueHasOrdered = new List<string>();
 
     void Start()
     {
@@ -67,6 +74,40 @@ public class Customer : MonoBehaviour
         }
     }
 
+    private void CreateCustomerDialogue()
+    {
+        customerDialogueOne.Clear();
+        customerDialogueTwo.Clear(); //reset dialogue options
+        customerDialogueOne.Add("Yo bro lemme get " + currOrder.drinkRecipe.drinkName + " with " + currOrder.garnish);
+        customerDialogueTwo.Add("Throw in some " + currOrder.drug + " too, thanks homie.");
+        customerDialogueHasOrdered.Add("Hey bro, I already ordered.");
+
+        customerDialogueOne.Add("hey bro i need " + currOrder.drinkRecipe.drinkName.ToLower() + " plus some " + currOrder.garnish.ToLower());
+        customerDialogueTwo.Add("if you got me... hook me up with some " + currOrder.drug.ToLower() + " in that..... thanks.");
+        customerDialogueHasOrdered.Add("ay bro, im still waiting on my drink");
+
+        customerDialogueOne.Add("erm..... i want " + currOrder.drinkRecipe.drinkName.ToLower() + " with " + currOrder.garnish.ToLower() + " please.......");
+        customerDialogueTwo.Add("erm..... and " + currOrder.drug.ToLower() + " plz...........shhhhhh.........");
+        customerDialogueHasOrdered.Add("erm.........please hurry.......");
+
+        customerDialogueOne.Add("HEY!! I DONT KNOW WHAT IM GONNA DO WITHOUT A " + currOrder.drinkRecipe.drinkName.ToUpper() + " WITH SOME " + currOrder.garnish.ToUpper());
+        customerDialogueTwo.Add("IF YOU DONT ADD " + currOrder.drug.ToUpper() + " IM GONNA TWEAK!!");
+        customerDialogueHasOrdered.Add("GET ME MY FUCKING ORDER NOW!!!!!");
+
+        customerDialogueOne.Add("Yoooo brochacho hit me with a " + currOrder.drinkRecipe.drinkName + " and a little " + currOrder.garnish);
+        customerDialogueTwo.Add("And u know I lowkey want some " + currOrder.drug + " with that too... thank you my goat");
+        customerDialogueHasOrdered.Add("Yoooo my brother, take ur time with my drink man, you always get me right.");
+
+        customerDialogueOne.Add("Can I get one order of " + currOrder.drinkRecipe.drinkName + " with some " + currOrder.garnish + "?");
+        customerDialogueTwo.Add(".............put some " + currOrder.drug.ToLower() + " in............ im not a fucking narc i swear bro");
+        customerDialogueHasOrdered.Add("im stressed as hell man, hurry so I can get tf out of here...");
+
+
+        customerDialogueOne.Add("BLESS ME UP WITH  " + currOrder.drinkRecipe.drinkName.ToUpper() + " NOW!!!! DONT FORGET THE " + currOrder.garnish.ToUpper() + "!!!!!");
+        customerDialogueTwo.Add("ANDDDDDD OF COURSE....THE USUAL.............my bad..... ill keep it down......just yknow..... " + currOrder.drug.ToLower() + ".");
+        customerDialogueHasOrdered.Add("ARE YOU GONNA HURRY UP AND BLESS ME UP NOW???");
+    }
+
     public void SetDialogueBox(Dialogue box)
     {
         dialogueBox = box;
@@ -74,22 +115,42 @@ public class Customer : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Interacted");
         if (interactable)
         {
-            Customer.currCustomer = this;
-
-            GameInput.instance.LockInput(true);
-            dialogueBox.AddText("I want sum of dat good shit");
-            dialogueBox.AddText("gimme juice");
-            dialogueBox.SetSprite(customerType, customerName);
-            dialogueBox.StartDialogue();
-            dialogueBox.OnDialogueEnded += (c) =>
+            if (hasOrdered == false)
             {
-                GameInput.instance.LockInput(false);
-                dialogueBox.gameObject.SetActive(false);
+                Customer.currCustomer = this;
+                GameInput.instance.LockInput(true);
                 OnDrinkOrdered?.Invoke(this);
-            };
+                CreateCustomerDialogue();
+                dialogueIndex = UnityEngine.Random.Range(0, customerDialogueOne.Count);
+                dialogueBox.AddText(customerDialogueOne[dialogueIndex]);
+                dialogueBox.AddText(customerDialogueTwo[dialogueIndex]);
+                dialogueBox.SetSprite(customerType, customerName);
+                dialogueBox.StartDialogue();
+                dialogueBox.OnDialogueEnded += (c) =>
+                {
+                    GameInput.instance.LockInput(false);
+                    dialogueBox.gameObject.SetActive(false);
+                    hasOrdered = true;
+                };
+            }
+            else
+            {
+                GameInput.instance.LockInput(true);
+                dialogueBox.AddText(customerDialogueHasOrdered[dialogueIndex]);
+                if (dialogueIndex==4 && UnityEngine.Random.Range(0, 2)==1)
+                {
+                    dialogueBox.AddText("You know I will always glaze you forever king....");
+                }
+                dialogueBox.SetSprite(customerType, customerName);
+                dialogueBox.StartDialogue();
+                dialogueBox.OnDialogueEnded += (c) =>
+                {
+                    GameInput.instance.LockInput(false);
+                    dialogueBox.gameObject.SetActive(false);
+                };
+            }
         }
     }
 

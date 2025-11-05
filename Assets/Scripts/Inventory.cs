@@ -12,6 +12,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform drinkThumbParent;      // where to instantiate drink thumbnails
     private List<GameObject> spawnedDrinkThumbs = new List<GameObject>();
 
+    private int selectedIndex = -1;
+
     public Drink currDrink;
 
     private void Awake()
@@ -35,5 +37,14 @@ public class Inventory : MonoBehaviour
             go.GetComponentInChildren<DrinkButton>().thisDrink = d;
             spawnedDrinkThumbs.Add(go);
         }
+
+        Debug.Log("populated");
     }
+
+    private void DisplayInventory()
+    {
+        
+    }
+
+    
 }

@@ -34,7 +34,6 @@ public class Dialogue : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(lines.Count);
             if(lines.Count > 0)
             {
                 //if line written, move to next line in list, else skip ahead and complete line
@@ -90,7 +89,6 @@ public class Dialogue : MonoBehaviour
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-        Debug.Log(textComponent.text);
         lines.RemoveAt(0);
         typing = false;
     }
