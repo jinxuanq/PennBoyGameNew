@@ -38,7 +38,6 @@ public class Customer : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        GameManager.instance.AddMoney(100);
     }
 
     // Update is called once per frame
@@ -190,7 +189,7 @@ public class Customer : MonoBehaviour
         if (GameManager.instance != null)
         {
             // Give reward
-            GameManager.instance.AddMoney((int)currOrder.CompareScore(d));
+            GameManager.instance.AddMoney((int) (currOrder.CompareScore(d)*20));
 
             // Remove order from UI
             GameManager.instance.RemoveOrderFromUI(this);

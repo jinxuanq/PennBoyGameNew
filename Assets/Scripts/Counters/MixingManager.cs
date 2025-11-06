@@ -28,7 +28,6 @@ public class MixingManager : MonoBehaviour
     private List<DrinkRecipe.Ingredient> currentMix = new List<DrinkRecipe.Ingredient>();
     private bool isMixing = false;
 
-    public bool UIOpen = false;
 
     private void Awake()
     {
@@ -46,7 +45,7 @@ public class MixingManager : MonoBehaviour
         pourmixingUI.SetActive(true);
         Debug.Log("Mixing UI opened");
 
-        UIOpen = true;
+        Inventory.instance.SetUI(false);
     }
 
     public void CloseMixingUI()
@@ -59,7 +58,7 @@ public class MixingManager : MonoBehaviour
         currentMix.Clear();
         Debug.Log("Mixing UI closed");
 
-        UIOpen = false;
+        Inventory.instance.SetUI(true);
     }
 
     public void OpenGlassChoosingUI(List<Drink> drinks)
@@ -71,7 +70,7 @@ public class MixingManager : MonoBehaviour
             glassChoosingUI.GetComponent<GlassChoosingUI>().Open(drinks);
             Debug.Log("GlassChoosingUI opened");
 
-            UIOpen = true;
+            Inventory.instance.SetUI(false);
         }
         else
         {
@@ -81,7 +80,7 @@ public class MixingManager : MonoBehaviour
     public void CloseGlassUI()
     {
         glassChoosingUI.GetComponent<GlassChoosingUI>().Close();
-        UIOpen = false;
+        Inventory.instance.SetUI(true);
 
     }
 
@@ -167,14 +166,13 @@ public class MixingManager : MonoBehaviour
     {
         ingredientUI.SetActive(true);
         ingredientUI.GetComponentInChildren<IngredientZone>().PopulateDrinks(GetAvailableDrinksWithGlass());
-        UIOpen = true;
+        Inventory.instance.SetUI(false);
 
     }
     public void CloseIngredientsUI()
     {
         ingredientUI.SetActive(false);
-        UIOpen = false;
-
+        Inventory.instance.SetUI(true);
     }
 
     public void OpenDrugsI()
@@ -185,7 +183,7 @@ public class MixingManager : MonoBehaviour
             drugChoosingUIScript.Open(drinks); 
             Debug.Log("DrugChoosingUI opened");
 
-            UIOpen = true;
+            Inventory.instance.SetUI(false);
         }
         else
         {
@@ -200,7 +198,7 @@ public class MixingManager : MonoBehaviour
 
         drugUI.SetActive(false);
 
-        UIOpen = false;
+        Inventory.instance.SetUI(true);
     }
 }
 

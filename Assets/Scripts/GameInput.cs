@@ -10,6 +10,8 @@ public class GameInput : MonoBehaviour
     public static GameInput instance { get; private set; }
 
     public event EventHandler OnInteractAction;
+    public event EventHandler<int> OnInventoryAction;
+
     private PlayerInputActions playerInputActions;
     private void Awake()
     {
@@ -20,12 +22,40 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Interact.performed += Interact_performed;
-
+        playerInputActions.Player.Inventory1.performed += Inventory1_performed;
+        playerInputActions.Player.Inventory2.performed += Inventory2_performed;
+        playerInputActions.Player.Inventory3.performed += Inventory3_performed;
+        playerInputActions.Player.Inventory4.performed += Inventory4_performed;
+        playerInputActions.Player.Inventory5.performed += Inventory5_performed;
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnInteractAction?.Invoke(this, EventArgs.Empty);
+    }
+    private void Inventory1_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        Inventory_performed(1);
+    }
+    private void Inventory2_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        Inventory_performed(2);
+    }
+    private void Inventory3_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        Inventory_performed(3);
+    }
+    private void Inventory4_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        Inventory_performed(4);
+    }
+    private void Inventory5_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        Inventory_performed(5);
+    }
+    private void Inventory_performed(int i)
+    {
+        OnInventoryAction?.Invoke(this, i);
     }
 
     public void LockInput(bool locked)

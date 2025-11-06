@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63c621cc946ab9e4797d0463a835156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assignedDrink: {fileID: 11400000, guid: b88cd393c8abdcf49baec33c73da7d5f, type: 2}
+  garnishGrade: 0
+  mixGrade: 0

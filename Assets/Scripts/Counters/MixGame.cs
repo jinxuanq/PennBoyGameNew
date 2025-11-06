@@ -66,7 +66,7 @@ public class MixGame : MonoBehaviour
             Debug.Log("Mix game: "+ score);
         }
         left = false; right = false;
-        currD.AssignMix(score);
+        currD.AssignMix(score*10);
     }
 
     public void LeftClick()

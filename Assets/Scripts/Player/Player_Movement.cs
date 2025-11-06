@@ -9,6 +9,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     private Rigidbody2D rb;
     private Vector2 moveInput;
+    private KeyCode selectInput;
 
     [SerializeField] private SpriteRenderer sprite;
 
