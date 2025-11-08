@@ -51,12 +51,6 @@ public class GlasswareCounter : MonoBehaviour
         MixingManager.instance.OpenMixingUI();
     }
 
-    private void HandleBlend()
-    {
-        Debug.Log("Blend Counter Interact");
-        //MixingManager.instance.OpenMixingUI();
-    }
-
     private void HandleIngredient()
     {
         Debug.Log("Ingredient Counter Interact");
@@ -64,7 +58,7 @@ public class GlasswareCounter : MonoBehaviour
     }
     private void HandleDrug()
     {
-        MixingManager.instance.OpenDrugsI();
+        MixingManager.instance.OpenDrugsUI();
         Debug.Log("Drug Counter Interact");
     }
 

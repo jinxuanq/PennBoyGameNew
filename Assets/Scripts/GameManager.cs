@@ -31,7 +31,10 @@ public class GameManager : MonoBehaviour
     [Header("Order UI")]
     [SerializeField] private TextMeshProUGUI orderTextTemplate; // assign the disabled template
     [SerializeField] private Transform orderListContainer;      // assign the OrderListContainer transform
+    [SerializeField] private Transform orderListHPair;      // assign the OrderListContainer transform
+    [SerializeField] private OrderIconSetter orderIconTemplate;      // assign the OrderListContainer transform
     private Dictionary<Customer, TextMeshProUGUI> activeOrders = new Dictionary<Customer, TextMeshProUGUI>();
+    private Dictionary<Customer, OrderIconSetter> activeIcons = new Dictionary<Customer, OrderIconSetter>();
 
     private void Awake()
     {
@@ -48,14 +51,27 @@ public class GameManager : MonoBehaviour
         if (activeOrders.ContainsKey(customer)) return; // already shown
 
         // Instantiate a copy, enable it and set text
-        TextMeshProUGUI text = Instantiate(orderTextTemplate, orderListContainer);
-        text.gameObject.SetActive(true);
+        Transform newHPair = Instantiate(orderListHPair, orderListContainer);
 
+        OrderIconSetter icon = Instantiate(orderIconTemplate, newHPair);
+        icon.gameObject.SetActive(true);
+
+        TextMeshProUGUI text = Instantiate(orderTextTemplate, newHPair);
+        text.gameObject.SetActive(true);
+        if (customer.customerType != "cop")
+        {
+            icon.SetSprite(customer.customerType);
+        }
+        else
+        {
+            icon.SetSprite(customer.disguiseType);
+        }
         // Use a clear display name: GameObject name (avoid ambiguous field names)
         string displayName = customer.gameObject.name;
         text.text = $"{displayName}: {customer.GetOrder().ToString()}";
 
         activeOrders[customer] = text;
+        activeIcons[customer] = icon;
     }
 
     /// <summary>Call if order text needs to be refreshed (e.g., changed name/status).</summary>
@@ -65,7 +81,16 @@ public class GameManager : MonoBehaviour
         if (!activeOrders.ContainsKey(customer)) return;
 
         var text = activeOrders[customer];
+        var icon = activeIcons[customer];
         text.text = $"{customer.gameObject.name}: {customer.GetOrder().ToString()}";
+        if (customer.customerType != "cop")
+        {
+            icon.SetSprite(customer.customerType);
+        }
+        else
+        {
+            icon.SetSprite(customer.disguiseType);
+        }
     }
 
     /// <summary>Call when the customer's order is completed / removed.</summary>
@@ -74,9 +99,12 @@ public class GameManager : MonoBehaviour
         if (customer == null) return;
         if (activeOrders.TryGetValue(customer, out var text))
         {
-            Destroy(text.gameObject);
+            var row = text.transform.parent;
+            if (row != null) Destroy(row.gameObject);
             activeOrders.Remove(customer);
         }
+        activeIcons.Remove(customer);
+        
     }
 
 

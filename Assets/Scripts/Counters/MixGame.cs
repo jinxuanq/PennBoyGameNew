@@ -27,6 +27,7 @@ public class MixGame : MonoBehaviour
     public void Begin(Drink d)
     {
         currD = d;
+        score = 0;
         StartCoroutine(Game());
     }
     private IEnumerator Game() 

@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject drinkThumbParent;      // where to instantiate drink thumbnails
     private List<GameObject> inventoryDrinkList = new List<GameObject>();
 
-    private int selectedIndex = 0;
+    private int selectedIndex = -1;
 
     private void Awake()
     {
@@ -56,7 +56,11 @@ public class Inventory : MonoBehaviour
 
     public void SelectIndex(int index)
     {
-        if(inventoryDrinkList.Count == 0) return;
+        if(inventoryDrinkList.Count == 0)
+        {
+            selectedIndex = -1;
+            return;
+        }
         if (inventoryDrinkList.Count > index-1)
         {
             for (int i = 0; i < drinkThumbParent.transform.childCount; i++)
@@ -71,10 +75,17 @@ public class Inventory : MonoBehaviour
 
     public void ServeCustomer()
     {
+        Debug.Log("serve attemtped at index " + selectedIndex);
+        if (selectedIndex==-1)
+        {
+            return;
+        }
         GameObject go = inventoryDrinkList[selectedIndex];
 
         PlayerInteract.instance.currentCustomer.CompleteOrder(go.GetComponentInChildren<DrinkThumb>().linkedDrink);
         inventoryDrinkList.RemoveAt(selectedIndex);
+        MixingManager.instance.createdDrinks.RemoveAt(selectedIndex);
         Destroy(go);
+        selectedIndex = -1;
     }
 }

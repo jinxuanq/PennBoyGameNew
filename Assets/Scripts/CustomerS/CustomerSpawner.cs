@@ -8,8 +8,8 @@ public class CustomerSpawner : MonoBehaviour
 
     public GameObject customerPrefab;
     private Table[] tables;
-    public float initialSpawnInterval = 5f;   // starting spawn interval (seconds)
-    public float minSpawnInterval = 1f;       // fastest spawn rate
+    public float initialSpawnInterval = 20f;   // starting spawn interval (seconds)
+    public float minSpawnInterval = 10f;       // fastest spawn rate
     public float gameDurationForMaxSpeed = 120f; // time in seconds until max speed reached
     private float elapsedTime = 0f;  // track how long the game has been running
     [SerializeField] private Dialogue dialogueBox;
@@ -25,7 +25,7 @@ public class CustomerSpawner : MonoBehaviour
     // Names
     private List<string> possibleNames = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank" };
 
-    private List<string> customerTypes = new List<string> { "fentFolder", "loudTweaker", "susMan" };
+    private List<string> customerTypes = new List<string> { "fentFolder", "loudTweaker", "susMan", "cop" };
 
     private List<string> namesInUse = new List<string>();
 

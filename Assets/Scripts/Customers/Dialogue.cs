@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class Dialogue : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class Dialogue : MonoBehaviour
 
     public TextMeshProUGUI nameText;
     public IconSelector icon;
+    public GameObject serveButton;
     public List<string> lines = new List<string>();
     public float textSpeed;
     private bool typing;
 
     private int index;
+    private string gameState;
 
     public event System.Action<Dialogue> OnDialogueEnded;
     [SerializeField] private GameInput gameInput;
@@ -34,7 +37,9 @@ public class Dialogue : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if(lines.Count > 0)
+            if (ClickIsOn(serveButton)) return;
+
+            if (lines.Count > 0)
             {
                 //if line written, move to next line in list, else skip ahead and complete line
                 if (!typing)
@@ -56,6 +61,16 @@ public class Dialogue : MonoBehaviour
 
         }
     }
+    
+    public void clearLines()
+    {
+        lines.Clear();
+        StopAllCoroutines();
+    }
+    public void SetState(string state)
+    {
+        gameState = state;
+    }
 
     public void AddText(String newText)
     {
@@ -70,9 +85,21 @@ public class Dialogue : MonoBehaviour
 
     public void StartDialogue()
     {
-
+        OnDialogueEnded = null;
 
         gameObject.SetActive(true);
+        if (gameState == "first order")
+        {
+            serveButton.SetActive(false);
+        }
+        if (gameState == "waiting")
+        {
+            serveButton.SetActive(true);
+        }
+        if (gameState == "served")
+        {
+            serveButton.SetActive(false);
+        }
         textComponent.text = string.Empty;
         index = 0;
         StartCoroutine(TypeLine());
@@ -95,7 +122,24 @@ public class Dialogue : MonoBehaviour
 
     void NextLine()
     {
-            textComponent.text = string.Empty;
-            StartCoroutine(TypeLine());
+        textComponent.text = string.Empty;
+        StartCoroutine(TypeLine());
+    }
+    
+    private bool ClickIsOn(GameObject target)
+    {
+        if (target == null || EventSystem.current == null) return false;
+
+        var ped = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(ped, results);
+
+        for (int i = 0; i < results.Count; i++)
+        {
+            var go = results[i].gameObject;
+            if (go == target || go.transform.IsChildOf(target.transform))
+                return true;
+        }
+        return false;
     }
 }

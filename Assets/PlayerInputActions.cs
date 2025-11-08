@@ -220,6 +220,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""c91aaaa2-3256-4575-9e3a-082700ee4d02"",
             ""actions"": [],
             ""bindings"": []
+        },
+        {
+            ""name"": ""OrderList"",
+            ""id"": ""9dff91b7-4f05-4557-a910-4b544c9fd2fe"",
+            ""actions"": [
+                {
+                    ""name"": ""OrderList"",
+                    ""type"": ""Button"",
+                    ""id"": ""751bcbf2-122a-4b70-a7d8-b70fb3f12138"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7d5e518a-7b63-404d-80ec-ae3000c56790"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OrderList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -235,6 +263,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Inventory5 = m_Player.FindAction("Inventory5", throwIfNotFound: true);
         // Locked
         m_Locked = asset.FindActionMap("Locked", throwIfNotFound: true);
+        // OrderList
+        m_OrderList = asset.FindActionMap("OrderList", throwIfNotFound: true);
+        m_OrderList_OrderList = m_OrderList.FindAction("OrderList", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -424,6 +455,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public LockedActions @Locked => new LockedActions(this);
+
+    // OrderList
+    private readonly InputActionMap m_OrderList;
+    private List<IOrderListActions> m_OrderListActionsCallbackInterfaces = new List<IOrderListActions>();
+    private readonly InputAction m_OrderList_OrderList;
+    public struct OrderListActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public OrderListActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OrderList => m_Wrapper.m_OrderList_OrderList;
+        public InputActionMap Get() { return m_Wrapper.m_OrderList; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OrderListActions set) { return set.Get(); }
+        public void AddCallbacks(IOrderListActions instance)
+        {
+            if (instance == null || m_Wrapper.m_OrderListActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_OrderListActionsCallbackInterfaces.Add(instance);
+            @OrderList.started += instance.OnOrderList;
+            @OrderList.performed += instance.OnOrderList;
+            @OrderList.canceled += instance.OnOrderList;
+        }
+
+        private void UnregisterCallbacks(IOrderListActions instance)
+        {
+            @OrderList.started -= instance.OnOrderList;
+            @OrderList.performed -= instance.OnOrderList;
+            @OrderList.canceled -= instance.OnOrderList;
+        }
+
+        public void RemoveCallbacks(IOrderListActions instance)
+        {
+            if (m_Wrapper.m_OrderListActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IOrderListActions instance)
+        {
+            foreach (var item in m_Wrapper.m_OrderListActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_OrderListActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public OrderListActions @OrderList => new OrderListActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -436,5 +513,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public interface ILockedActions
     {
+    }
+    public interface IOrderListActions
+    {
+        void OnOrderList(InputAction.CallbackContext context);
     }
 }

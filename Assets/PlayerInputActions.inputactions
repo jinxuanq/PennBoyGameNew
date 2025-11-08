@@ -198,6 +198,34 @@
             "id": "c91aaaa2-3256-4575-9e3a-082700ee4d02",
             "actions": [],
             "bindings": []
+        },
+        {
+            "name": "OrderList",
+            "id": "9dff91b7-4f05-4557-a910-4b544c9fd2fe",
+            "actions": [
+                {
+                    "name": "OrderList",
+                    "type": "Button",
+                    "id": "751bcbf2-122a-4b70-a7d8-b70fb3f12138",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7d5e518a-7b63-404d-80ec-ae3000c56790",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OrderList",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

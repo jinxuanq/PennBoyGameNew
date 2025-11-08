@@ -63,23 +63,21 @@ public class MixingManager : MonoBehaviour
 
     public void OpenGlassChoosingUI(List<Drink> drinks)
     {
-        Debug.Log($"OpenGlassChoosingUI called. Drinks count: {drinks.Count}");
+        GameInput.instance.LockInput(true);
+        glassChoosingUI.GetComponent<GlassChoosingUI>().Open(drinks);
+        Debug.Log("GlassChoosingUI opened");
+        glassChoosingUI.SetActive(true);
 
-        if (glassChoosingUI != null)
-        {
-            glassChoosingUI.GetComponent<GlassChoosingUI>().Open(drinks);
-            Debug.Log("GlassChoosingUI opened");
+        Inventory.instance.SetUI(false);
 
-            Inventory.instance.SetUI(false);
-        }
-        else
-        {
-            Debug.LogWarning("GlassChoosingUI reference not set in MixingManager!");
-        }
     }
     public void CloseGlassUI()
     {
+        GameInput.instance.LockInput(false);
         glassChoosingUI.GetComponent<GlassChoosingUI>().Close();
+        Debug.Log("GlassChoosingUI closed");
+
+        glassChoosingUI.SetActive(false);
         Inventory.instance.SetUI(true);
 
     }
@@ -164,6 +162,8 @@ public class MixingManager : MonoBehaviour
     
     public void OpenIngredientsUI()
     {
+        GameInput.instance.LockInput(true);
+
         ingredientUI.SetActive(true);
         ingredientUI.GetComponentInChildren<IngredientZone>().PopulateDrinks(GetAvailableDrinksWithGlass());
         Inventory.instance.SetUI(false);
@@ -171,28 +171,26 @@ public class MixingManager : MonoBehaviour
     }
     public void CloseIngredientsUI()
     {
+        GameInput.instance.LockInput(false);
+
         ingredientUI.SetActive(false);
         Inventory.instance.SetUI(true);
     }
 
-    public void OpenDrugsI()
+    public void OpenDrugsUI()
     {
-        var drinks = GetAvailableDrinksWithGlass();
-        if (drugChoosingUIScript != null)
-        {
-            drugChoosingUIScript.Open(drinks); 
-            Debug.Log("DrugChoosingUI opened");
+        GameInput.instance.LockInput(true);
 
-            Inventory.instance.SetUI(false);
-        }
-        else
-        {
-            Debug.LogWarning("DrugChoosingUI script not assigned in MixingManager!");
-            drugUI.SetActive(true); 
-        }
+        var drinks = GetAvailableDrinksWithGlass();
+        drugChoosingUIScript.Open(drinks);
+        Debug.Log("DrugChoosingUI opened");
+        drugUI.SetActive(true); 
+        Inventory.instance.SetUI(false);
     }
     public void CloseDrugsUI()
     {
+        GameInput.instance.LockInput(false);
+
         if (drugChoosingUIScript != null)
             drugChoosingUIScript.Close();
 
@@ -200,6 +198,7 @@ public class MixingManager : MonoBehaviour
 
         Inventory.instance.SetUI(true);
     }
+
 }
 
 

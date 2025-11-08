@@ -11,6 +11,7 @@ public class GameInput : MonoBehaviour
 
     public event EventHandler OnInteractAction;
     public event EventHandler<int> OnInventoryAction;
+    public event EventHandler OnOrderList;
 
     private PlayerInputActions playerInputActions;
     private void Awake()
@@ -20,6 +21,7 @@ public class GameInput : MonoBehaviour
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+        playerInputActions.OrderList.Enable();
 
         playerInputActions.Player.Interact.performed += Interact_performed;
         playerInputActions.Player.Inventory1.performed += Inventory1_performed;
@@ -27,6 +29,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Inventory3.performed += Inventory3_performed;
         playerInputActions.Player.Inventory4.performed += Inventory4_performed;
         playerInputActions.Player.Inventory5.performed += Inventory5_performed;
+        playerInputActions.OrderList.OrderList.performed += OrderList_performed;
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -57,6 +60,10 @@ public class GameInput : MonoBehaviour
     {
         OnInventoryAction?.Invoke(this, i);
     }
+    private void OrderList_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnOrderList?.Invoke(this, EventArgs.Empty);
+    }
 
     public void LockInput(bool locked)
     {
@@ -64,11 +71,29 @@ public class GameInput : MonoBehaviour
         {
             playerInputActions.Player.Disable();
             playerInputActions.Locked.Enable();
+            playerInputActions.OrderList.Disable();
         }
         else
         {
             playerInputActions.Player.Enable();
             playerInputActions.Locked.Disable();
+            playerInputActions.OrderList.Enable();
+        }
+    }
+
+    public void LockInputWithReturn(bool locked)
+    {
+        if (locked)
+        {
+            playerInputActions.Player.Disable();
+            playerInputActions.Locked.Enable();
+            playerInputActions.OrderList.Enable();
+        }
+        else
+        {
+            playerInputActions.Player.Enable();
+            playerInputActions.Locked.Disable();
+            playerInputActions.OrderList.Enable();
         }
     }
     public Vector2 GetMovementVectorNormalized()
