@@ -82,7 +82,8 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
         return ing == DrinkRecipe.Ingredient.Flower
             || ing == DrinkRecipe.Ingredient.Leaf
             || ing == DrinkRecipe.Ingredient.Powder
-            || ing == DrinkRecipe.Ingredient.Crystal;
+            || ing == DrinkRecipe.Ingredient.Crystal
+            || ing == DrinkRecipe.Ingredient.Empty;
     }
 
     private DrugType ConvertToDrugType(DrinkRecipe.Ingredient ing)

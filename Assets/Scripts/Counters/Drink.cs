@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum GlassType { Shot, Highball, Martini, Rocks} // extend as needed
-public enum DrugType { Flower, Leaf, Powder, Crystal}
+public enum DrugType { Flower, Leaf, Powder, Crystal, Empty}
 
 public class Drink : MonoBehaviour
 {

@@ -243,7 +243,7 @@ public class Customer : MonoBehaviour
         }
         else
         {
-            if (d.assignedDrug == null)
+            if (d.assignedDrug.ToString().Equals("Empty"))
             {
                 dialogueBox.AddText(copDialogueServed[UnityEngine.Random.Range(0, copDialogueServed.Count)]);
             }

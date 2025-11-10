@@ -118,7 +118,11 @@ public class IngredientZone : MonoBehaviour, IDropHandler
     {
         Debug.Log($"Assigned {ing.ingredientType} with score {ing.score} to drink {drink.name}");
         // Remove the drink thumbnail from UI
-        var thumbToRemove = spawnedDrinkThumbs.Find(t => t.GetComponent<DrinkThumb>().linkedDrink == drink);
+        GameObject thumbToRemove = null;
+        if(spawnedDrinkThumbs.Find(t => t.GetComponent<DrinkThumb>().linkedDrink == drink) != null)
+        {
+            thumbToRemove = spawnedDrinkThumbs.Find(t => t.GetComponent<DrinkThumb>().linkedDrink == drink);
+        }
         if (thumbToRemove != null)
         {
             spawnedDrinkThumbs.Remove(thumbToRemove);

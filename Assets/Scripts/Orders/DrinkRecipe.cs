@@ -24,6 +24,7 @@ public class DrinkRecipe : ScriptableObject
         Flower,
         Leaf,
         Powder,
-        Crystal
+        Crystal,
+        Empty
     }
 }
