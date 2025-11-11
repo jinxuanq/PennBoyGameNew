@@ -20,6 +20,10 @@ public class MixGame : MonoBehaviour
     [SerializeField] private Image rightIG;
     [SerializeField] private GameObject shaker;
 
+    [SerializeField] private GameObject otherUI;
+    [SerializeField] private GameObject mixGame;
+    [SerializeField] private GameObject complete;
+
     private void Start()
     {
         currY = (int) buttonLeft.transform.position.y;
@@ -32,6 +36,9 @@ public class MixGame : MonoBehaviour
     }
     private IEnumerator Game() 
     {
+        otherUI.SetActive(false);
+        complete.SetActive(false);
+
         timer = 0;
         leftIG.color = Color.white;
         rightIG.color = Color.white;
@@ -48,7 +55,7 @@ public class MixGame : MonoBehaviour
 
             Vector3 relativePos = buttonLeft.transform.position - shaker.transform.position;
             float angle = Mathf.Atan2(relativePos.y, relativePos.x);
-            shaker.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+            shaker.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg+90);
 
             yield return new WaitForSeconds(1);
 
@@ -59,7 +66,7 @@ public class MixGame : MonoBehaviour
 
             relativePos = buttonRight.transform.position - shaker.transform.position;
             angle = Mathf.Atan2(relativePos.y, relativePos.x);
-            shaker.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); 
+            shaker.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg+90); 
 
             yield return new WaitForSeconds(1);
 
@@ -68,6 +75,12 @@ public class MixGame : MonoBehaviour
         }
         left = false; right = false;
         currD.AssignMix(score*10);
+
+        complete.SetActive(true);
+        yield return new WaitForSeconds(2);
+        otherUI.SetActive(true);
+        mixGame.SetActive(false);
+
     }
 
     public void LeftClick()

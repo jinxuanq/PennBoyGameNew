@@ -94,6 +94,7 @@ public class DrinkThumb : MonoBehaviour, IDropHandler, IPointerClickHandler
             case DrinkRecipe.Ingredient.Leaf: return DrugType.Leaf;
             case DrinkRecipe.Ingredient.Powder: return DrugType.Powder;
             case DrinkRecipe.Ingredient.Crystal: return DrugType.Crystal;
+            case DrinkRecipe.Ingredient.Empty: return DrugType.Empty;
             default: return DrugType.Powder;
         }
     }
