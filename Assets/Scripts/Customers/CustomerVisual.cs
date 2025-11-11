@@ -8,6 +8,7 @@ public class CustomerVisual : MonoBehaviour
     [SerializeField] Sprite fentFolder;
     [SerializeField] Sprite loudTweaker;
     [SerializeField] Sprite susMan;
+    [SerializeField] Sprite cop;
 
     void Awake()
     { 
@@ -32,6 +33,11 @@ public class CustomerVisual : MonoBehaviour
         {
             spriteRenderer.sprite = susMan;
         }
+    }
+
+    public void showCop()
+    {
+        spriteRenderer.sprite = cop;
     }
 
 

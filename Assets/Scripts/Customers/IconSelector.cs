@@ -11,7 +11,9 @@ public class IconSelector : MonoBehaviour
     [SerializeField] private Sprite fentFolder;
     [SerializeField] private Sprite loudTweaker;
     [SerializeField] private Sprite susMan;
+    [SerializeField] private Sprite cop;
     [SerializeField] private UnityEngine.UI.Image iconImage;
+
 
     public void Sprite(String customerType)
     {
@@ -24,10 +26,15 @@ public class IconSelector : MonoBehaviour
         {
             iconImage.sprite = loudTweaker;
         }
-        if(customerType == "susMan")
+        if (customerType == "susMan")
         {
             iconImage.sprite = susMan;
         }
+    }
+
+    public void showCop()
+    {
+        iconImage.sprite = cop;
     }
 
 }

@@ -252,6 +252,8 @@ public class Customer : MonoBehaviour
                 dialogueBox.AddText("You are under arrest for the sale of " + d.assignedDrug + ".");
             }
             dialogueBox.SetSprite(disguiseType, "Cop");
+            customerVisual.showCop();
+            dialogueBox.showCop();
             dialogueBox.SetState("served");
         }
         dialogueBox.StartDialogue();

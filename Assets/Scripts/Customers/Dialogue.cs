@@ -83,6 +83,11 @@ public class Dialogue : MonoBehaviour
         nameText.text = name;
     }
 
+    public void showCop()
+    {
+        icon.showCop();
+    }
+
     public void StartDialogue()
     {
         OnDialogueEnded = null;

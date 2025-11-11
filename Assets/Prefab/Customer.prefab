@@ -100,6 +100,7 @@ MonoBehaviour:
   fentFolder: {fileID: 21300000, guid: 47bb0f2750349bd4faf92cc3ab2c978e, type: 3}
   loudTweaker: {fileID: 21300000, guid: c7c295d9a933c314caa8120b2fc7f3b2, type: 3}
   susMan: {fileID: 21300000, guid: 7921620903b7cfd4bada940441434200, type: 3}
+  cop: {fileID: 21300000, guid: d34a95ec9040c6f4e9ca5f8c4b2c1936, type: 3}
 --- !u!1 &7355715114946915693
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,4 +309,5 @@ MonoBehaviour:
   currOrder: {fileID: 0}
   customerName: 
   customerType: 
+  disguiseType: 
   customerVisual: {fileID: 1719603659493302477}

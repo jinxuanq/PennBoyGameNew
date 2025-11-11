@@ -5805,6 +5805,7 @@ MonoBehaviour:
   fentFolder: {fileID: 873536502, guid: d02b169db4dd29c44ad0f8c3c7ad3bbd, type: 3}
   loudTweaker: {fileID: -437990013, guid: 49782ad9daebede49afc5ba9263909e5, type: 3}
   susMan: {fileID: -1908639858, guid: c0cd17c19a9649249b86680fe93bb839, type: 3}
+  cop: {fileID: -1767424214, guid: 705d733d0f368144ea5f542ffbbd63a7, type: 3}
   iconImage: {fileID: 1039610387}
 --- !u!114 &1039610387
 MonoBehaviour:
@@ -6322,8 +6323,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 8810890664922983966, guid: 8bd33d41580ac6449b410049d1962492, type: 3}
-  initialSpawnInterval: 20
-  minSpawnInterval: 12
+  initialSpawnInterval: 30
+  minSpawnInterval: 22
   gameDurationForMaxSpeed: 120
   dialogueBox: {fileID: 1662499499}
   orders: []
