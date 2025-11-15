@@ -44,7 +44,9 @@ public class Customer : MonoBehaviour
     private List<string> copDialogueHasOrdered = new List<string>();
     private List<string> copDialogueServed = new List<string>();
 
-
+    private bool isChasing = false;
+    private Transform chaseTarget;   // player transform
+    public float chaseSpeed = 2f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,6 +66,12 @@ public class Customer : MonoBehaviour
             Vector2 newPos = Vector2.MoveTowards(rb.position, targetTable.position, moveSpeed * Time.fixedDeltaTime);
             rb.MovePosition(newPos);
         }
+
+        if (isChasing && chaseTarget != null)
+    {
+        Vector2 chasePos = Vector2.MoveTowards(rb.position, chaseTarget.position, chaseSpeed * Time.deltaTime);
+        rb.MovePosition(chasePos);
+    }
     }
 
     public void AssignSprite()
@@ -91,8 +99,17 @@ public class Customer : MonoBehaviour
         {
             reachedTable = true;
             interactable = true;
-            //GetComponent<Collider2D>().isTrigger = true;
-            //Debug.Log("Customer reached table: " + table.name);
+        }
+        if (isChasing && other.gameObject.CompareTag("Player"))
+        {
+            // Lose money
+            if (GameManager.instance != null)
+                GameManager.instance.AddMoney(-15); // losing money
+
+            Debug.Log(customerName + " caught the player!");
+
+            OnCustomerLeave?.Invoke();
+            Destroy(gameObject);
         }
     }
 
@@ -261,7 +278,41 @@ public class Customer : MonoBehaviour
         {
             GameInput.instance.LockInput(false);
             dialogueBox.gameObject.SetActive(false);
-            if (GameManager.instance != null)
+            float score = (float)(currOrder.CompareScore(d) * 20f);
+
+
+            bool shouldChase = false;
+
+            if (customerType != "cop")
+            {
+                if (score < 15f)
+                    shouldChase = true; // bad rating → chase
+                else
+                {
+                    // Good customer, normal leave
+                    LeaveNormally(score);
+                    return;
+                }
+            }
+            else
+            {
+                // COP logic
+                if (d.assignedDrug != DrugType.Empty)
+                    shouldChase = true; // bust → chase
+                else
+                {
+                    LeaveNormally(score);
+                    return;
+                }
+            }
+
+            if (shouldChase)
+            {
+                StartChasing();
+            }
+            else
+                LeaveNormally(score);
+            /*if (GameManager.instance != null)
             {
                 // Give reward
 
@@ -282,7 +333,7 @@ public class Customer : MonoBehaviour
             OnCustomerLeave?.Invoke();
 
             // Destroy the customer GameObject
-            Destroy(gameObject);
+            Destroy(gameObject);*/
         };
     }
 
@@ -380,4 +431,56 @@ public class Customer : MonoBehaviour
 
     }
 
+    private void StartChasing()
+    {
+        Debug.Log(customerName + " IS NOW CHASING YOU!");
+
+        isChasing = true;
+        interactable = false;
+        hasOrdered = true;
+        chaseTarget = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // Free the table immediately
+        if (table != null)
+            table.isOccupied = false;
+
+        // No UI order anymore
+        if (GameManager.instance != null)
+            GameManager.instance.RemoveOrderFromUI(this);
+
+        currOrder = null;
+    }
+
+    private void LeaveNormally(float score)
+    {
+        if (GameManager.instance != null)
+            GameManager.instance.AddMoney((int)score);
+
+        if (GameManager.instance != null)
+            GameManager.instance.RemoveOrderFromUI(this);
+
+        currOrder = null;
+
+        if (table != null)
+            table.isOccupied = false;
+
+        OnCustomerLeave?.Invoke();
+        Destroy(gameObject);
+    }
+    /*
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isChasing && other.gameObject.CompareTag("Player"))
+        {
+            // Lose money
+            if (GameManager.instance != null)
+                GameManager.instance.AddMoney(-15); // losing money
+
+            Debug.Log(customerName + " caught the player!");
+
+            OnCustomerLeave?.Invoke();
+            Destroy(gameObject);
+        }
+    }
+    */
 }
