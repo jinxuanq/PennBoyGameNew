@@ -22,6 +22,8 @@ public class Customer : MonoBehaviour
 
     public event System.Action<Customer> OnDrinkOrdered;
 
+    [SerializeField] private AudioSource caught;
+   [SerializeField] private AudioSource money;
     // Name
     public string customerName;
 
@@ -47,7 +49,7 @@ public class Customer : MonoBehaviour
 
     private bool isChasing = false;
     private Transform chaseTarget;   // player transform
-    public float chaseSpeed = 2f;
+    public float chaseSpeed = 4f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -106,9 +108,10 @@ public class Customer : MonoBehaviour
         {
             // Lose money
             if (GameManager.instance != null)
-                GameManager.instance.AddMoney(-15); // losing money
+                GameManager.instance.AddMoney(-50); // losing money
 
             Debug.Log(customerName + " caught the player!");
+            caught.Play();
 
             OnCustomerLeave?.Invoke();
             Destroy(gameObject);
@@ -275,6 +278,7 @@ public class Customer : MonoBehaviour
             dialogueBox.showCop();
             dialogueBox.SetState("served");
         }
+        money.Play();
         dialogueBox.StartDialogue();
         dialogueBox.OnDialogueEnded += (c) =>
         {
