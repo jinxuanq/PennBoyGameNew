@@ -6038,6 +6038,7 @@ MonoBehaviour:
   moveSpeed: 5
   gameInput: {fileID: 1037871196}
   sprite: {fileID: 2009815198}
+  drinkProjectilePrefab: {fileID: 8213732991595462661, guid: 0f13d1059ffd70e4183cac68bc91ef1a, type: 3}
 --- !u!61 &1173041016
 BoxCollider2D:
   m_ObjectHideFlags: 0

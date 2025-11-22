@@ -467,20 +467,26 @@ public class Customer : MonoBehaviour
         OnCustomerLeave?.Invoke();
         Destroy(gameObject);
     }
-    /*
-    void OnTriggerEnter2D(Collider2D other)
+    public bool IsChasing()
     {
-        if (isChasing && other.gameObject.CompareTag("Player"))
-        {
-            // Lose money
-            if (GameManager.instance != null)
-                GameManager.instance.AddMoney(-15); // losing money
-
-            Debug.Log(customerName + " caught the player!");
-
-            OnCustomerLeave?.Invoke();
-            Destroy(gameObject);
-        }
+        return isChasing;
     }
-    */
+
+    public void KillChasingCustomer()
+    {
+        if (!isChasing) return;
+
+        // free table
+        if (table != null) table.isOccupied = false;
+
+        // remove from UI
+        if (GameManager.instance != null)
+            GameManager.instance.RemoveOrderFromUI(this);
+
+        // notify spawner
+        OnCustomerLeave?.Invoke();
+
+        // destroy object
+        Destroy(gameObject);
+    }
 }

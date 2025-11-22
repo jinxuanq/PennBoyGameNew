@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1719603659493302477}
   m_Layer: 3
   m_Name: CustomerVisual
-  m_TagString: Untagged
+  m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 5355866382561272865}
   m_Layer: 3
   m_Name: Customer
-  m_TagString: Untagged
+  m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,3 +311,4 @@ MonoBehaviour:
   customerType: 
   disguiseType: 
   customerVisual: {fileID: 1719603659493302477}
+  chaseSpeed: 2

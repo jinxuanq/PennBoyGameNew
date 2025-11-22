@@ -12,6 +12,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler<int> OnInventoryAction;
     public event EventHandler OnOrderList;
+    public event EventHandler OnThrowDrink;
 
     private PlayerInputActions playerInputActions;
     private void Awake()
@@ -30,6 +31,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Inventory4.performed += Inventory4_performed;
         playerInputActions.Player.Inventory5.performed += Inventory5_performed;
         playerInputActions.OrderList.OrderList.performed += OrderList_performed;
+        playerInputActions.Player.Throw.performed += Throw_performed;
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -63,6 +65,11 @@ public class GameInput : MonoBehaviour
     private void OrderList_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnOrderList?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Throw_performed(InputAction.CallbackContext obj)
+    {
+        OnThrowDrink?.Invoke(this, EventArgs.Empty);
     }
 
     public void LockInput(bool locked)

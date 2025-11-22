@@ -89,6 +89,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""90c1f516-b1bf-41d0-8455-78b1d12b8476"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Inventory5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13b69d50-924a-4db8-b808-012083081636"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -261,6 +281,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Inventory3 = m_Player.FindAction("Inventory3", throwIfNotFound: true);
         m_Player_Inventory4 = m_Player.FindAction("Inventory4", throwIfNotFound: true);
         m_Player_Inventory5 = m_Player.FindAction("Inventory5", throwIfNotFound: true);
+        m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         // Locked
         m_Locked = asset.FindActionMap("Locked", throwIfNotFound: true);
         // OrderList
@@ -334,6 +355,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inventory3;
     private readonly InputAction m_Player_Inventory4;
     private readonly InputAction m_Player_Inventory5;
+    private readonly InputAction m_Player_Throw;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -345,6 +367,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Inventory3 => m_Wrapper.m_Player_Inventory3;
         public InputAction @Inventory4 => m_Wrapper.m_Player_Inventory4;
         public InputAction @Inventory5 => m_Wrapper.m_Player_Inventory5;
+        public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -375,6 +398,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Inventory5.started += instance.OnInventory5;
             @Inventory5.performed += instance.OnInventory5;
             @Inventory5.canceled += instance.OnInventory5;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -400,6 +426,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Inventory5.started -= instance.OnInventory5;
             @Inventory5.performed -= instance.OnInventory5;
             @Inventory5.canceled -= instance.OnInventory5;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -510,6 +539,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnInventory3(InputAction.CallbackContext context);
         void OnInventory4(InputAction.CallbackContext context);
         void OnInventory5(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
     }
     public interface ILockedActions
     {

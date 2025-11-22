@@ -88,4 +88,38 @@ public class Inventory : MonoBehaviour
         Destroy(go);
         selectedIndex = -1;
     }
+    public int GetSelectedIndex()
+    {
+        return selectedIndex;
+    }
+
+    public bool TryConsumeSelectedDrink()
+    {
+        if (selectedIndex < 0)
+        {
+            Debug.Log("No drink selected ¡ª cannot consume");
+            return false;
+        }
+
+        if (selectedIndex >= inventoryDrinkList.Count)
+        {
+            Debug.Log("Selected drink index is out of range");
+            selectedIndex = -1;
+            return false;
+        }
+
+        // Get UI element
+        GameObject uiItem = inventoryDrinkList[selectedIndex];
+
+        // Remove from lists
+        inventoryDrinkList.RemoveAt(selectedIndex);
+        MixingManager.instance.createdDrinks.RemoveAt(selectedIndex);
+
+        Destroy(uiItem);
+
+        // reset selection
+        selectedIndex = -1;
+
+        return true;
+    }
 }
