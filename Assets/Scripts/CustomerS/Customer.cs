@@ -29,6 +29,7 @@ public class Customer : MonoBehaviour
     public string disguiseType;
 
     [SerializeField] private CustomerVisual customerVisual;
+    [SerializeField] private GameObject alertVisual;
 
     public event System.Action OnCustomerLeave; // Event to notify spawner
 
@@ -50,6 +51,7 @@ public class Customer : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        alertVisual.SetActive(false);
     }
     void Awake()
     {
@@ -433,6 +435,13 @@ public class Customer : MonoBehaviour
 
     private void StartChasing()
     {
+        alertVisual.SetActive(true);
+
+        StartCoroutine(chaseNum());
+    }
+    private IEnumerator chaseNum()
+    {
+        yield return new WaitForSeconds(3);
         Debug.Log(customerName + " IS NOW CHASING YOU!");
 
         isChasing = true;
